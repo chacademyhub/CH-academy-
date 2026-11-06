@@ -352,7 +352,8 @@
       if (s.remaining === 0) cls = 'zero';
       else if (s.remaining <= 2) cls = 'low';
       const ph = s.phone ? `<div class="phone">📱 ${esc(s.phone)}</div>` : '';
-      const pay = s.paid > 0 ? `<div class="paid">💰 مدفوع: ${s.paid} درهم</div>` : '<div class="paid" style="color:#999;">💰 لم يُسجّل دفع</div>';
+      const payDate = s.lastPaymentDate ? ' (آخر دفعة: ' + fmtDate(s.lastPaymentDate) + ')' : '';
+      const pay = s.paid > 0 ? <div class="paid">💰 مدفوع: ${s.paid} درهم ${payDate}</div> : '<div class="paid" style="color:#999;">💰 لم يُسجّل دفع</div>';
       return `<div class="card">
         <div class="info">
           <div class="name">${esc(s.name)}</div>
