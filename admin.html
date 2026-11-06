@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<title>لوحة الإدارة — C.H Academy</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Tahoma, Arial, sans-serif; background: #f5f7fa; min-height: 100vh; padding: 20px; }
+  .container { max-width: 950px; margin: 0 auto; }
+  .header { text-align: center; margin-bottom: 22px; }
+  .header img { width: 80px; height: 80px; border-radius: 50%; margin-bottom: 10px; }
+  h1 { color: #000; font-size: 24px; font-weight: 900; }
+  .subtitle { color: #E67E22; font-size: 12px; letter-spacing: 2px; margin-top: 4px; font-weight: 700; }
+  .panel { background: #fff; padding: 30px; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,.08); max-width: 480px; margin: 30px auto; text-align: center; }
+  input, textarea, select { width: 100%; padding: 14px; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 15px; margin-bottom: 12px; font-family: inherit; background: #fff; }
+  input:focus, textarea:focus, select:focus { outline: none; border-color: #E67E22; }
+  button { background: #E67E22; color: #fff; border: none; padding: 12px 20px; border-radius: 10px; font-size: 15px; cursor: pointer; font-family: inherit; font-weight: 600; }
+  button:hover { background: #d36e17; }
+  button.small { padding: 6px 12px; font-size: 13px; }
+  button.green { background: #2e7d32; }
+  button.red   { background: #c62828; }
+  button.gray  { background: #78909c; }
+  button.gold  { background: #F2B01E; color: #000; }
+  button.wa    { background: #25D366; }
+  button.blue  { background: #1565c0; }
+  .toolbar { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+  .toolbar input { margin: 0; flex: 1; min-width: 200px; }
+  .card { background: #fff; border-radius: 12px; padding: 16px 20px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; box-shadow: 0 2px 8px rgba(0,0,0,.05); border-right: 4px solid #E67E22; }
+  .info { flex: 1; min-width: 220px; }
+  .info .name { font-weight: 700; color: #222; font-size: 16px; margin-bottom: 4px; }
+  .info .meta { color: #777; font-size: 13px; }
+  .info .phone { color: #1565c0; font-size: 13px; direction: ltr; text-align: right; }
+  .info .paid { color: #2e7d32; font-size: 13px; font-weight: 600; }
+  .info .remaining { color: #2e7d32; font-weight: 700; font-size: 18px; }
+  .info .remaining.low { color: #ef6c00; }
+  .info .remaining.zero { color: #c62828; }
+  .actions { display: flex; gap: 6px; flex-wrap: wrap; }
+  .toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: #333; color: #fff; padding: 12px 24px; border-radius: 10px; font-size: 14px; opacity: 0; transition: opacity .3s; pointer-events: none; z-index: 9999; max-width: 90%; text-align: center; }
+  .toast.show { opacity: 1; }
+  .overlay { display: none; position: fixed; inset: 0; background: #f5f7fa; z-index: 1000; overflow-y: auto; padding: 16px; }
+  .overlay-header { position: sticky; top: 0; background: #f5f7fa; padding: 12px 0; display: flex; gap: 10px; justify-content: center; margin-bottom: 16px; border-bottom: 2px solid #e0e0e0; z-index: 10; flex-wrap: wrap; }
+  .share-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 12px; max-width: 1100px; margin: 0 auto; }
+  .share-card { background: #fff; border: 2px solid #E67E22; border-radius: 14px; padding: 16px; display: flex; flex-direction: column; gap: 10px; }
+  .share-card .sc-name { font-weight: 900; font-size: 16px; color: #000; }
+  .share-card .sc-meta { color: #777; font-size: 13px; }
+  .share-card .sc-phone { color: #1565c0; font-size: 13px; direction: ltr; text-align: right; }
+  .share-card .sc-url { background: #f5f5f5; padding: 8px; border-radius: 6px; font-size: 11px; color: #555; word-break: break-all; direction: ltr; text-align: left; font-family: monospace; max-height: 55px; overflow: hidden; }
+  .share-card .sc-actions { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 4px; }
+  .share-card .sc-actions button { flex: 1; min-width: 90px; font-size: 13px; padding: 8px; }
+  .notify-card { background: #fff; border: 2px solid #E67E22; border-radius: 14px; padding: 16px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; max-width: 800px; margin-left: auto; margin-right: auto; }
+  .notify-card .nc-name { font-weight: 900; font-size: 16px; }
+  .notify-card .nc-meta { color: #777; font-size: 13px; }
+  .notify-card .nc-remaining { color: #c62828; font-weight: 900; font-size: 18px; }
+  .tabs { display: flex; gap: 6px; margin-bottom: 20px; flex-wrap: wrap; }
+  .tabs button { background: #e0e0e0; color: #555; }
+  .tabs button.active { background: #E67E22; color: #fff; }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+  .section { background: #fff; padding: 20px; border-radius: 12px; margin-bottom: 16px; border-right: 4px solid #E67E22; max-width: 600px; margin-left: auto; margin-right: auto; }
+  .section h3 { color: #E67E22; font-size: 15px; margin-bottom: 14px; }
+  .section p { color: #666; font-size: 13px; line-height: 1.7; margin-bottom: 12px; }
+  .field-row { display: flex; gap: 8px; align-items: center; margin-bottom: 10px; flex-wrap: wrap; }
+  .field-row label { min-width: 150px; font-size: 13px; color: #333; }
+  .field-row input, .field-row select { margin: 0; flex: 1; }
+  .color-pair { display: flex; gap: 8px; }
+  .color-pair input[type=color] { width: 60px; height: 45px; padding: 4px; cursor: pointer; }
+  .color-pair input[type=text] { flex: 1; direction: ltr; font-family: monospace; }
+  .history-box { background: #fff; border-radius: 14px; padding: 20px; margin-bottom: 16px; max-width: 700px; margin-left: auto; margin-right: auto; }
+  .history-box h3 { color: #E67E22; font-size: 15px; margin-bottom: 14px; border-bottom: 2px solid #f0f0f0; padding-bottom: 8px; }
+  .history-item { padding: 10px 12px; background: #f9f9f9; border-radius: 8px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; font-size: 13px; border-right: 3px solid #1565c0; }
+  .history-item.pay { border-right-color: #2e7d32; }
+  .history-item .hdate { color: #666; font-size: 12px; direction: ltr; }
+  .history-item .hamount { color: #2e7d32; font-weight: 900; font-size: 15px; }
+  .history-item .hnote { color: #555; flex: 1; min-width: 150px; }
+  .stat-box { background: linear-gradient(135deg, #f0f8ff, #e3f2fd); padding: 14px; border-radius: 10px; text-align: center; margin-bottom: 14px; }
+  .stat-box .label { color: #666; font-size: 12px; }
+  .stat-box .value { color: #1565c0; font-size: 24px; font-weight: 900; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <img src="logo.svg" alt="C.H Academy" onerror="this.style.display='none'">
+    <h1>C.H Academy</h1>
+    <p class="subtitle">لوحة الإدارة — v3.0</p>
+  </div>
+
+  <div id="setupView" class="panel" style="display:none;">
+    <p style="color:#666;line-height:1.7;margin-bottom:15px;"><strong>إعداد لمرة واحدة</strong><br>الصق رابط Apps Script:</p>
+    <input type="url" id="setupApi" placeholder="https://script.google.com/macros/s/.../exec" dir="ltr">
+    <button onclick="saveApi()" style="width:100%;">حفظ ومتابعة</button>
+  </div>
+
+  <div id="loginView" class="panel" style="display:none;">
+    <p style="color:#666;margin-bottom:18px;">🔐 أدخل كلمة السر</p>
+    <input type="password" id="pw" placeholder="كلمة السر" autocomplete="current-password">
+    <button onclick="doLogin()" style="width:100%;">دخول</button>
+    <p style="color:#999;font-size:11px;margin-top:14px;">محمي: 4 محاولات / قفل 5 دقائق بعدها</p>
+  </div>
+
+  <div id="mainView" style="display:none;">
+    <div class="toolbar">
+      <input type="text" id="search" placeholder="🔍 ابحث..." oninput="render()">
+      <button class="wa" onclick="openNotifications()">🔔 تنبيهات</button>
+      <button class="gold" onclick="openShareCenter()">📤 مشاركة</button>
+      <button class="green" onclick="openSettings()">⚙️</button>
+      <button class="gray" onclick="refresh()">🔄</button>
+      <button class="red" onclick="doLogout()">خروج</button>
+    </div>
+
+    <div style="background:#fff;padding:16px;border-radius:12px;margin-bottom:16px;border-right:4px solid #E67E22;">
+      <h3 style="margin-bottom:12px;color:#E67E22;font-size:16px;">➕ إضافة طالب</h3>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <input id="newId"    placeholder="الرقم"        style="flex:1;min-width:110px;">
+        <input id="newName"  placeholder="اسم الطالب"   style="flex:2;min-width:170px;">
+        <input id="newTotal" placeholder="الحصص" type="number" style="flex:1;min-width:90px;">
+        <input id="newPhone" placeholder="جوال ولي الأمر" style="flex:2;min-width:180px;" dir="ltr">
+        <button class="green" onclick="addStudent()">إضافة</button>
+      </div>
+    </div>
+
+    <div id="list"></div>
+  </div>
+</div>
+
+<div id="shareOverlay" class="overlay">
+  <div class="overlay-header">
+    <button class="gold" onclick="exportCSV()">📥 تصدير CSV</button>
+    <button class="red" onclick="closeOverlay('shareOverlay')">❌ إغلاق</button>
+  </div>
+  <div class="share-grid" id="shareGrid"></div>
+</div>
+
+<div id="notifyOverlay" class="overlay">
+  <div class="overlay-header">
+    <button class="green" onclick="runNotifyNow()">▶️ فحص الآن</button>
+    <button class="red" onclick="closeOverlay('notifyOverlay')">❌ إغلاق</button>
+  </div>
+  <div style="max-width:800px;margin:0 auto;">
+    <div id="notifyList"></div>
+  </div>
+</div>
+
+<div id="historyOverlay" class="overlay">
+  <div class="overlay-header">
+    <button class="red" onclick="closeOverlay('historyOverlay')">❌ إغلاق</button>
+  </div>
+  <div id="historyContent" style="max-width:700px;margin:0 auto;"></div>
+</div>
+
+<div id="paymentOverlay" class="overlay">
+  <div class="overlay-header">
+    <button class="red" onclick="closeOverlay('paymentOverlay')">❌ إغلاق</button>
+  </div>
+  <div style="max-width:500px;margin:0 auto;background:#fff;padding:30px;border-radius:16px;">
+    <h2 id="payStudentName" style="margin-bottom:20px;color:#2e7d32;"></h2>
+    <input type="number" id="payAmount" placeholder="المبلغ (درهم)" min="1">
+    <select id="payMethod">
+      <option value="cash">💵 نقداً</option>
+      <option value="bank">🏦 تحويل بنكي</option>
+      <option value="card">💳 بطاقة</option>
+    </select>
+    <input type="text" id="payNote" placeholder="ملاحظة (اختياري)">
+    <button class="green" onclick="submitPayment()" style="width:100%;">💰 تسجيل الدفعة</button>
+  </div>
+</div>
+
+<div id="settingsOverlay" class="overlay">
+  <div class="overlay-header">
+    <button class="red" onclick="closeOverlay('settingsOverlay')">❌ إغلاق</button>
+  </div>
+  <div style="max-width:650px;margin:0 auto;">
+    <div class="tabs">
+      <button class="active" onclick="switchTab(event,'tabSecurity')">🔒 الأمان</button>
+      <button onclick="switchTab(event,'tabBranding')">🎨 الهوية</button>
+      <button onclick="switchTab(event,'tabNumbers')">📊 الأرقام</button>
+      <button onclick="switchTab(event,'tabNotify')">📧 الإشعارات</button>
+      <button onclick="switchTab(event,'tabBackup')">💾 النسخ الاحتياطي</button>
+    </div>
+
+    <div id="tabSecurity" class="tab-content active">
+      <div class="section">
+        <h3>🔐 تغيير كلمة السر</h3>
+        <input type="password" id="oldPw" placeholder="كلمة السر الحالية">
+        <input type="password" id="newPw" placeholder="الجديدة (8 أحرف على الأقل)">
+        <input type="password" id="newPw2" placeholder="تأكيد الجديدة">
+        <button class="green" onclick="changePassword()" style="width:100%;">💾 تغيير</button>
+      </div>
+      <div class="section">
+        <h3>🚪 إنهاء كل الجلسات</h3>
+        <button class="red" onclick="logoutAll()" style="width:100%;">تسجيل خروج شامل</button>
+      </div>
+    </div>
+
+    <div id="tabBranding" class="tab-content">
+      <div class="section">
+        <h3>🎨 الألوان</h3>
+        <div class="field-row"><label>الأساسي</label>
+          <div class="color-pair"><input type="color" id="primaryColor" oninput="document.getElementById('primaryHex').value=this.value"><input type="text" id="primaryHex" oninput="document.getElementById('primaryColor').value=this.value"></div>
+        </div>
+        <div class="field-row"><label>الثانوي</label>
+          <div class="color-pair"><input type="color" id="secondaryColor" oninput="document.getElementById('secondaryHex').value=this.value"><input type="text" id="secondaryHex" oninput="document.getElementById('secondaryColor').value=this.value"></div>
+        </div>
+      </div>
+      <div class="section">
+        <h3>📝 النصوص</h3>
+        <div class="field-row"><label>اسم الأكاديمية</label><input type="text" id="brandName"></div>
+        <div class="field-row"><label>السطر الثاني</label><input type="text" id="brandSubtitle" dir="ltr"></div>
+        <div class="field-row"><label>تذييل عربي</label><input type="text" id="footerTextAr"></div>
+        <div class="field-row"><label>تذييل إنجليزي</label><input type="text" id="footerTextEn" dir="ltr"></div>
+        <div class="field-row"><label>رقم الاستفسار</label><input type="tel" id="inquiryPhone" dir="ltr"></div>
+      </div>
+    </div>
+
+    <div id="tabNumbers" class="tab-content">
+      <div class="section">
+        <h3>📊 حدود التنبيه</h3>
+        <div class="field-row"><label>حد التنبيه (حصص)</label><input type="number" id="lowThreshold"></div>
+        <div class="field-row"><label>فترة تهدئة (أيام)</label><input type="number" id="cooldownDays"></div>
+        <div class="field-row"><label>حد محاولات</label><input type="number" id="maxFails"></div>
+      </div>
+    </div>
+
+    <div id="tabNotify" class="tab-content">
+      <div class="section">
+        <h3>📧 إيميل الإشعارات</h3>
+        <input type="email" id="adminEmail" dir="ltr">
+      </div>
+      <div class="section">
+        <h3>📱 واتساب (CallMeBot)</h3>
+        <p>أضف <code dir="ltr">+34 644 51 95 23</code> → أرسل <code dir="ltr">I allow callmebot to send me messages</code></p>
+        <div class="field-row"><label>جوالك</label><input type="tel" id="callMeBotPhone" dir="ltr"></div>
+        <div class="field-row"><label>API Key</label><input type="password" id="callMeBotApiKey" dir="ltr"></div>
+      </div>
+    </div>
+
+    <div id="tabBackup" class="tab-content">
+      <div class="section">
+        <h3>💾 حالة النسخ الاحتياطي</h3>
+        <div id="backupStatus" style="margin-bottom:14px;padding:14px;background:#f0fff4;border-radius:8px;"></div>
+        <p>النسخة تُحفظ في مجلد Google Drive باسم <strong>CH_Academy_Backups</strong>.</p>
+        <button class="blue" onclick="backupNow()" style="width:100%;margin-bottom:8px;">💾 نسخة احتياطية الآن</button>
+        <button class="gray" onclick="loadBackupStatus()" style="width:100%;">🔄 تحديث الحالة</button>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:8px;max-width:600px;margin:20px auto;">
+      <button class="green" onclick="saveAllConfig()" style="flex:2;">💾 حفظ</button>
+      <button class="gold" onclick="testNotify()" style="flex:1;">🧪 اختبار</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  let API_URL   = localStorage.getItem('ch_api_url') || '';
+  let TOKEN     = sessionStorage.getItem('ch_token') || '';
+  let STUDENTS  = [];
+  let CONFIG    = {};
+  let SITE_BASE = window.location.origin + window.location.pathname.replace('admin.html','').replace(/\/$/, '') + '/';
+  let CURRENT_STUDENT = null;
+
+  (function() {
+    const p = new URLSearchParams(window.location.search);
+    const apiParam = p.get('api');
+    if (apiParam) { API_URL = apiParam; localStorage.setItem('ch_api_url', API_URL); }
+  })();
+
+  function toast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg; t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 3200);
+  }
+  function esc(s) { return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+  function fmtDate(ts) {
+    if (!ts) return '—';
+    const d = new Date(ts);
+    return d.toLocaleDateString('ar-AE', { year:'numeric', month:'short', day:'numeric' }) + ' ' +
+           d.toLocaleTimeString('ar-AE', { hour:'2-digit', minute:'2-digit' });
+  }
+
+  function saveApi() {
+    const v = document.getElementById('setupApi').value.trim();
+    if (!v.startsWith('https://script.google.com/')) return toast('رابط غير صحيح');
+    API_URL = v; localStorage.setItem('ch_api_url', v); showLogin();
+  }
+  function showSetup() {
+    document.getElementById('setupView').style.display = 'block';
+    document.getElementById('loginView').style.display = 'none';
+    document.getElementById('mainView').style.display = 'none';
+  }
+  function showLogin() {
+    document.getElementById('setupView').style.display = 'none';
+    document.getElementById('loginView').style.display = 'block';
+    document.getElementById('mainView').style.display = 'none';
+  }
+
+  async function doLogin() {
+    const pw = document.getElementById('pw').value;
+    if (!pw) return toast('أدخل كلمة السر');
+    try {
+      const r = await fetch(API_URL + '?action=login&password=' + encodeURIComponent(pw));
+      const d = await r.json();
+      if (!d.success) {
+        if (d.code === 'RATE') return toast(`🔒 ${d.message}`);
+        if (d.code === 'AUTH' && d.remaining !== undefined) return toast(`❌ ${d.message}`);
+        return toast(d.message || 'فشل');
+      }
+      TOKEN = d.token;
+      sessionStorage.setItem('ch_token', TOKEN);
+      document.getElementById('pw').value = '';
+      document.getElementById('loginView').style.display = 'none';
+      document.getElementById('mainView').style.display = 'block';
+      refresh();
+    } catch (e) { toast('تعذر الاتصال'); }
+  }
+
+  async function doLogout() {
+    if (TOKEN) { try { await fetch(API_URL + '?action=logout&token=' + TOKEN); } catch (_) {} }
+    sessionStorage.removeItem('ch_token');
+    location.reload();
+  }
+
+  async function api(params) {
+    params.token = TOKEN;
+    const qs = Object.entries(params).map(([k,v]) => encodeURIComponent(k) + '=' + encodeURIComponent(v)).join('&');
+    const r = await fetch(API_URL + '?' + qs);
+    const d = await r.json();
+    if (d.code === 'AUTH') { toast('انتهت الجلسة'); doLogout(); }
+    return d;
+  }
+
+  async function refresh() {
+    try {
+      const d = await api({ action: 'admin', op: 'list' });
+      if (!d.success) return toast('فشل التحميل');
+      STUDENTS = d.students;
+      render();
+    } catch (e) { toast('تعذر الاتصال'); }
+  }
+
+  function render() {
+    const q = document.getElementById('search').value.trim().toLowerCase();
+    const filtered = q ? STUDENTS.filter(s => s.name.toLowerCase().includes(q) || s.id.includes(q) || (s.phone||'').includes(q)) : STUDENTS;
+    const list = document.getElementById('list');
+    if (!filtered.length) { list.innerHTML = '<p style="text-align:center;color:#999;padding:40px;">لا يوجد طلاب</p>'; return; }
+    list.innerHTML = filtered.map(s => {
+      let cls = '';
+      if (s.remaining === 0) cls = 'zero';
+      else if (s.remaining <= 2) cls = 'low';
+      const ph = s.phone ? `<div class="phone">📱 ${esc(s.phone)}</div>` : '';
+      const pay = s.paid > 0 ? `<div class="paid">💰 مدفوع: ${s.paid} درهم</div>` : '<div class="paid" style="color:#999;">💰 لم يُسجّل دفع</div>';
+      return `<div class="card">
+        <div class="info">
+          <div class="name">${esc(s.name)}</div>
+          <div class="meta">رقم: ${esc(s.id)} | استُخدم: ${s.used}/${s.total}</div>
+          ${ph}${pay}
+          <div class="remaining ${cls}">باقي: ${s.remaining} حصة</div>
+        </div>
+        <div class="actions">
+          <button class="green small" onclick="adjust('${s.id}','inc')">+ حصة</button>
+          <button class="red small" onclick="adjust('${s.id}','dec')">− حصة</button>
+          <button class="blue small" onclick="openPayment('${s.id}')">💰 دفع</button>
+          <button class="small gray" onclick="openHistory('${s.id}')">📋 سجل</button>
+          <button class="wa small" onclick="sendWhatsApp('${s.id}')">📱</button>
+          <button class="gray small" onclick="del('${s.id}','${esc(s.name)}')">🗑</button>
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  async function adjust(id, op) {
+    let note = '';
+    if (op === 'inc') {
+      const input = prompt('ملاحظة على الحصة (اختياري):');
+      if (input === null) return;
+      note = input;
+    }
+    const d = await api({ action: 'admin', op, id, note });
+    if (d.success) { toast('✅ تم التحديث'); refresh(); } else toast(d.message || 'فشل');
+  }
+
+  async function addStudent() {
+    const id = document.getElementById('newId').value.trim();
+    const name = document.getElementById('newName').value.trim();
+    const total = document.getElementById('newTotal').value || 0;
+    const phone = document.getElementById('newPhone').value.trim();
+    if (!id || !name) return toast('الرقم والاسم مطلوبان');
+    const d = await api({ action: 'admin', op: 'add_student', id, name, total, phone });
+    if (d.success) {
+      toast('تمت الإضافة — المفتاح: ' + d.secret);
+      ['newId','newName','newTotal','newPhone'].forEach(x => document.getElementById(x).value = '');
+      refresh();
+    } else toast(d.message || 'فشل');
+  }
+
+  async function del(id, name) {
+    if (!confirm('حذف الطالب "' + name + '"؟')) return;
+    const d = await api({ action: 'admin', op: 'delete', id });
+    if (d.success) { toast('تم الحذف'); refresh(); } else toast('فشل');
+  }
+
+  function openPayment(id) {
+    const s = STUDENTS.find(x => String(x.id) === String(id));
+    if (!s) return;
+    CURRENT_STUDENT = s;
+    document.getElementById('payStudentName').textContent = '💰 ' + s.name + ' — مدفوع سابقاً: ' + s.paid + ' درهم';
+    document.getElementById('payAmount').value = '';
+    document.getElementById('payNote').value = '';
+    document.getElementById('payMethod').value = 'cash';
+    openOverlay('paymentOverlay');
+    setTimeout(() => document.getElementById('payAmount').focus(), 100);
+  }
+
+  async function submitPayment() {
+    if (!CURRENT_STUDENT) return;
+    const amount = document.getElementById('payAmount').value;
+    if (!amount || Number(amount) <= 0) return toast('أدخل مبلغاً صحيحاً');
+    const method = document.getElementById('payMethod').value;
+    const note = document.getElementById('payNote').value.trim();
+    const d = await api({ action: 'admin', op: 'log_payment', id: CURRENT_STUDENT.id, amount, method, note });
+    if (d.success) {
+      toast('✅ تم تسجيل ' + amount + ' درهم');
+      closeOverlay('paymentOverlay');
+      refresh();
+    } else toast(d.message || 'فشل');
+  }
+
+  async function openHistory(id) {
+    const d = await api({ action: 'admin', op: 'student_history', id });
+    if (!d.success) return toast('فشل');
+    const s = d.student;
+    let html = `<div class="history-box">
+      <h3>👤 ${esc(s.name)}</h3>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:16px;">
+        <div class="stat-box"><div class="label">الحصص المتبقية</div><div class="value">${s.remaining}</div></div>
+        <div class="stat-box"><div class="label">استُخدمت</div><div class="value">${s.used}/${s.total}</div></div>
+        <div class="stat-box"><div class="label">مدفوع</div><div class="value" style="color:#2e7d32;">${s.paid} د.إ</div></div>
+      </div>
+      ${s.lastPaymentDate ? `<p style="color:#666;font-size:13px;margin-bottom:10px;">آخر دفعة: ${fmtDate(s.lastPaymentDate)}</p>` : ''}
+    </div>`;
+
+    html += `<div class="history-box"><h3>📋 سجل الحضور (${d.attendance.length})</h3>`;
+    if (!d.attendance.length) html += '<p style="color:#999;text-align:center;padding:20px;">لا توجد حصص مسجلة</p>';
+    else html += d.attendance.map(a => `
+      <div class="history-item">
+        <div class="hnote">${esc(a.note) || '<span style="color:#ccc;">بدون ملاحظة</span>'}</div>
+        <div class="hdate">${fmtDate(a.date)}</div>
+      </div>`).join('');
+    html += '</div>';
+
+    html += `<div class="history-box"><h3>💰 سجل المدفوعات (${d.payments.length})</h3>`;
+    if (!d.payments.length) html += '<p style="color:#999;text-align:center;padding:20px;">لا توجد مدفوعات</p>';
+    else html += d.payments.map(p => `
+      <div class="history-item pay">
+        <div class="hamount">${p.amount} د.إ</div>
+        <div class="hnote">${esc(p.note) || ({cash:'نقداً',bank:'تحويل',card:'بطاقة'}[p.method] || p.method)}</div>
+        <div class="hdate">${fmtDate(p.date)}</div>
+      </div>`).join('');
+    html += '</div>';
+
+    document.getElementById('historyContent').innerHTML = html;
+    openOverlay('historyOverlay');
+  }
+
+  function studentURL(s) {
+    return SITE_BASE + '?api=' + encodeURIComponent(API_URL) + '&id=' + encodeURIComponent(s.id) + '&key=' + encodeURIComponent(s.secret);
+  }
+  function normalizePhone(p) {
+    p = String(p || '').replace(/[\s\-\(\)]/g, '');
+    if (!p) return '';
+    if (p.startsWith('+')) p = p.substring(1);
+    if (p.startsWith('00')) p = p.substring(2);
+    if (p.startsWith('0')) p = '971' + p.substring(1);
+    return p;
+  }
+  function waMessage(s) {
+    return `السلام عليكم،\n\nرابط متابعة حصص ${s.name} في C.H Academy:\n\n${studentURL(s)}\n\nباقي له: ${s.remaining} حصة.`;
+  }
+  function sendWhatsApp(id) {
+    const s = STUDENTS.find(x => String(x.id) === String(id));
+    if (!s) return toast('غير موجود');
+    const phone = normalizePhone(s.phone);
+    const msg = encodeURIComponent(waMessage(s));
+    window.open(phone ? `https://wa.me/${phone}?text=${msg}` : `https://wa.me/?text=${msg}`, '_blank');
+    if (!phone) toast('لا يوجد رقم');
+  }
+  async function copyLink(id) {
+    const s = STUDENTS.find(x => String(x.id) === String(id));
+    if (!s) return;
+    try { await navigator.clipboard.writeText(studentURL(s)); toast('✅ تم النسخ'); }
+    catch (e) {
+      const t = document.createElement('textarea'); t.value = studentURL(s);
+      document.body.appendChild(t); t.select(); document.execCommand('copy'); t.remove();
+      toast('✅ تم النسخ');
+    }
+  }
+  async function openShareCenter() {
+    const d = await api({ action: 'admin', op: 'export_all' });
+    if (!d.success) return toast('فشل');
+    document.getElementById('shareGrid').innerHTML = d.students.map(s => `
+      <div class="share-card">
+        <div class="sc-name">${esc(s.name)}</div>
+        <div class="sc-meta">رقم: ${esc(s.id)} — باقي: ${s.remaining}</div>
+        <div class="sc-phone">${s.phone ? '📱 ' + esc(s.phone) : '⚠️ لا يوجد رقم'}</div>
+        <div class="sc-url">${esc(studentURL(s))}</div>
+        <div class="sc-actions">
+          <button class="wa" onclick="sendWhatsApp('${s.id}')">📱 واتساب</button>
+          <button class="gold" onclick="copyLink('${s.id}')">📋 نسخ</button>
+        </div>
+      </div>`).join('');
+    openOverlay('shareOverlay');
+  }
+  async function exportCSV() {
+    if (!STUDENTS.length) return toast('لا يوجد طلاب');
+    const rows = [['ID','Name','Phone','Paid','Remaining','Link']];
+    for (const s of STUDENTS) rows.push([s.id, s.name, s.phone || '', s.paid, s.remaining, studentURL(s)]);
+    const csv = '\uFEFF' + rows.map(r => r.map(c => '"' + String(c).replace(/"/g,'""') + '"').join(',')).join('\n');
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+    a.download = 'CH_Parents_' + new Date().toISOString().substring(0,10) + '.csv';
+    a.click(); toast('تم التصدير');
+  }
+
+  async function openNotifications() {
+    const d = await api({ action: 'admin', op: 'get_notifications' });
+    if (!d.success) return toast('فشل');
+    const list = document.getElementById('notifyList');
+    if (!d.lowStudents.length) {
+      list.innerHTML = '<p style="text-align:center;color:#2e7d32;padding:40px;font-size:16px;">✅ كل الطلاب رصيدهم جيد</p>';
+    } else {
+      list.innerHTML = d.lowStudents.map(s => `
+        <div class="notify-card">
+          <div>
+            <div class="nc-name">${esc(s.name)}</div>
+            <div class="nc-meta">رقم: ${esc(s.id)} ${s.phone ? '— 📱 ' + esc(s.phone) : ''}</div>
+            <div class="nc-remaining">باقي: ${s.remaining} حصة</div>
+          </div>
+          <div style="display:flex;gap:6px;">
+            <button class="wa" onclick="sendWhatsApp('${s.id}')">📱</button>
+            <button class="gold" onclick="copyLink('${s.id}')">📋</button>
+          </div>
+        </div>`).join('');
+    }
+    openOverlay('notifyOverlay');
+  }
+  async function runNotifyNow() {
+    if (!confirm('تشغيل الفحص الآن؟')) return;
+    toast('جاري التشغيل...');
+    const r = await api({ action: 'admin', op: 'run_notify' });
+    toast(`فحص ${r.low} • أُرسل ${r.notified}`);
+  }
+
+  function switchTab(e, tabId) {
+    document.querySelectorAll('.tabs button').forEach(b => b.classList.remove('active'));
+    e.target.classList.add('active');
+    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+    document.getElementById(tabId).classList.add('active');
+    if (tabId === 'tabBackup') loadBackupStatus();
+  }
+
+  async function openSettings() {
+    openOverlay('settingsOverlay');
+    const d = await api({ action: 'admin', op: 'get_config' });
+    if (!d.success) return toast('فشل');
+    CONFIG = d.config;
+    document.getElementById('primaryColor').value = CONFIG.primaryColor;
+    document.getElementById('primaryHex').value = CONFIG.primaryColor;
+    document.getElementById('secondaryColor').value = CONFIG.secondaryColor;
+    document.getElementById('secondaryHex').value = CONFIG.secondaryColor;
+    document.getElementById('brandName').value = CONFIG.brandName;
+    document.getElementById('brandSubtitle').value = CONFIG.brandSubtitle;
+    document.getElementById('footerTextAr').value = CONFIG.footerTextAr;
+    document.getElementById('footerTextEn').value = CONFIG.footerTextEn;
+    document.getElementById('inquiryPhone').value = CONFIG.inquiryPhone || '';
+    document.getElementById('lowThreshold').value = CONFIG.lowThreshold;
+    document.getElementById('cooldownDays').value = CONFIG.cooldownDays;
+    document.getElementById('maxFails').value = CONFIG.maxFails;
+    document.getElementById('adminEmail').value = CONFIG.adminEmail || '';
+    document.getElementById('callMeBotPhone').value = CONFIG.callMeBotPhone || '';
+  }
+
+  async function saveAllConfig() {
+    const params = {
+      action: 'admin', op: 'save_config',
+      primaryColor: document.getElementById('primaryColor').value,
+      secondaryColor: document.getElementById('secondaryColor').value,
+      brandName: document.getElementById('brandName').value.trim(),
+      brandSubtitle: document.getElementById('brandSubtitle').value.trim(),
+      footerTextAr: document.getElementById('footerTextAr').value.trim(),
+      footerTextEn: document.getElementById('footerTextEn').value.trim(),
+      inquiryPhone: document.getElementById('inquiryPhone').value.trim(),
+      lowThreshold: document.getElementById('lowThreshold').value,
+      cooldownDays: document.getElementById('cooldownDays').value,
+      maxFails: document.getElementById('maxFails').value,
+      adminEmail: document.getElementById('adminEmail').value.trim(),
+      callMeBotPhone: document.getElementById('callMeBotPhone').value.trim()
+    };
+    const key = document.getElementById('callMeBotApiKey').value.trim();
+    if (key) params.callMeBotApiKey = key;
+    const r = await api(params);
+    toast(r.success ? '✅ تم حفظ الإعدادات' : 'فشل');
+  }
+
+  async function changePassword() {
+    const oldPw = document.getElementById('oldPw').value;
+    const newPw = document.getElementById('newPw').value;
+    const newPw2 = document.getElementById('newPw2').value;
+    if (!oldPw || !newPw) return toast('أدخل كلمتي السر');
+    if (newPw.length < 8) return toast('8 أحرف على الأقل');
+    if (newPw !== newPw2) return toast('غير متطابقتين');
+    const r = await api({ action: 'admin', op: 'change_password', old_password: oldPw, new_password: newPw });
+    if (r.success) {
+      TOKEN = r.token; sessionStorage.setItem('ch_token', TOKEN);
+      ['oldPw','newPw','newPw2'].forEach(x => document.getElementById(x).value = '');
+      toast('✅ تم التغيير');
+    } else toast(r.message || 'فشل');
+  }
+
+  async function logoutAll() {
+    if (!confirm('تسجيل خروج من كل الأجهزة؟')) return;
+    await api({ action: 'admin', op: 'logout_all' });
+    sessionStorage.removeItem('ch_token');
+    location.reload();
+  }
+
+  async function testNotify() {
+    toast('جاري الإرسال...');
+    const r = await api({ action: 'admin', op: 'test_notify' });
+    toast(r.message || (r.success ? '✅ تم' : 'فشل'));
+  }
+
+  async function loadBackupStatus() {
+    const el = document.getElementById('backupStatus');
+    el.innerHTML = 'جاري التحميل...';
+    const d = await api({ action: 'admin', op: 'backup_status' });
+    if (!d.success) { el.innerHTML = 'فشل التحميل'; return; }
+    el.innerHTML = `
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+        <strong>الحالة:</strong>
+        <span style="color:${d.active ? '#2e7d32' : '#c62828'};">
+          ${d.active ? '✅ مفعّل (يومياً 3 صباحاً)' : '❌ غير مفعّل'}
+        </span>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <strong>آخر نسخة:</strong>
+        <span style="color:#666;">${d.lastBackup ? fmtDate(new Date(d.lastBackup).getTime()) : 'لم تُنشأ بعد'}</span>
+      </div>`;
+  }
+
+  async function backupNow() {
+    if (!confirm('إنشاء نسخة احتياطية الآن؟')) return;
+    toast('جاري النسخ...');
+    const r = await api({ action: 'admin', op: 'backup_now' });
+    if (r.success) { toast('✅ تم إنشاء نسخة'); loadBackupStatus(); }
+    else toast('فشل');
+  }
+
+  function openOverlay(id) {
+    document.getElementById(id).style.display = 'block';
+    document.body.style.overflow = 'hidden';
+  }
+  function closeOverlay(id) {
+    document.getElementById(id).style.display = 'none';
+    document.body.style.overflow = '';
+  }
+
+  window.saveApi=saveApi; window.doLogin=doLogin; window.doLogout=doLogout;
+  window.refresh=refresh; window.adjust=adjust; window.addStudent=addStudent; window.del=del;
+  window.openPayment=openPayment; window.submitPayment=submitPayment;
+  window.openHistory=openHistory;
+  window.sendWhatsApp=sendWhatsApp; window.copyLink=copyLink;
+  window.openShareCenter=openShareCenter; window.exportCSV=exportCSV;
+  window.openNotifications=openNotifications; window.runNotifyNow=runNotifyNow;
+  window.openSettings=openSettings; window.closeOverlay=closeOverlay;
+  window.switchTab=switchTab; window.saveAllConfig=saveAllConfig;
+  window.changePassword=changePassword; window.logoutAll=logoutAll;
+  window.testNotify=testNotify; window.loadBackupStatus=loadBackupStatus; window.backupNow=backupNow;
+
+  (function init() {
+    if (!API_URL) { showSetup(); return; }
+    if (TOKEN) {
+      document.getElementById('loginView').style.display = 'none';
+      document.getElementById('mainView').style.display = 'block';
+      refresh();
+    } else { showLogin(); }
+  })();
+</script>
+</body>
+</html>
