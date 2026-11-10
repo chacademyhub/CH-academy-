@@ -152,7 +152,28 @@
   </div>
   <div id="historyContent" style="max-width:700px;margin:0 auto;"></div>
 </div>
-
+<div id="editOverlay" class="overlay">
+  <div class="overlay-header">
+    <button class="red" onclick="closeOverlay('editOverlay')">❌ إغلاق</button>
+  </div>
+  <div style="max-width:500px;margin:0 auto;background:#fff;padding:30px;border-radius:16px;">
+    <h2 id="editStudentTitle" style="margin-bottom:20px;color:#E67E22;"></h2>
+    <input type="hidden" id="editId">
+    <label style="font-size:13px;color:#666;">اسم الطالب</label>
+    <input type="text" id="editName" style="margin-top:5px;">
+    <label style="font-size:13px;color:#666;">إجمالي الحصص</label>
+    <input type="number" id="editTotal" style="margin-top:5px;">
+    <label style="font-size:13px;color:#666;">جوال ولي الأمر</label>
+    <input type="text" id="editPhone" dir="ltr" style="margin-top:5px;">
+    <label style="font-size:13px;color:#666;">إيميل ولي الأمر</label>
+    <input type="text" id="editEmail" dir="ltr" style="margin-top:5px;">
+    <label style="font-size:13px;color:#666;">تاريخ الميلاد</label>
+    <input type="date" id="editDob" style="margin-top:5px;">
+    <label style="font-size:13px;color:#666;">المواعيد</label>
+    <input type="text" id="editSchedule" style="margin-top:5px;">
+    <button class="green" onclick="submitEdit()" style="width:100%;margin-top:15px;">💾 حفظ التعديلات</button>
+  </div>
+</div>
 <div id="paymentOverlay" class="overlay">
   <div class="overlay-header">
     <button class="red" onclick="closeOverlay('paymentOverlay')">❌ إغلاق</button>
@@ -371,6 +392,7 @@
           <button class="small gray" onclick="openHistory('${s.id}')">📋 سجل</button>
           <button class="wa small" onclick="sendWhatsApp('${s.id}')">📱</button>
           <button class="gray small" onclick="del('${s.id}','${esc(s.name)}')">🗑</button>
+          <button class="gold small" onclick="openEdit('${s.id}')">✏️ تعديل</button>
         </div>
       </div>`;
     }).join('');
@@ -403,7 +425,36 @@
       refresh();
     } else toast(d.message || 'فشل');
   }
+  function openEdit(id) {
+    const s = STUDENTS.find(x => String(x.id) === String(id));
+    if (!s) return toast('غير موجود');
+    document.getElementById('editId').value = s.id;
+    document.getElementById('editStudentTitle').textContent = '✏️ تعديل: ' + s.name;
+    document.getElementById('editName').value = s.name || '';
+    document.getElementById('editTotal').value = s.total || 0;
+    document.getElementById('editPhone').value = s.phone || '';
+    document.getElementById('editEmail').value = s.email || '';
+    document.getElementById('editDob').value = s.dob || '';
+    document.getElementById('editSchedule').value = s.schedule || '';
+    openOverlay('editOverlay');
+  }
 
+  async function submitEdit() {
+    const id = document.getElementById('editId').value;
+    const name = document.getElementById('editName').value.trim();
+    const total = document.getElementById('editTotal').value;
+    const phone = document.getElementById('editPhone').value.trim();
+    const email = document.getElementById('editEmail').value.trim();
+    const dob = document.getElementById('editDob').value;
+    const schedule = document.getElementById('editSchedule').value.trim();
+    if (!name) return toast('الاسم مطلوب');
+    const d = await api({ action: 'admin', op: 'edit_student', id, name, total, phone, email, dob, schedule });
+    if (d.success) {
+      toast('✅ تم تعديل البيانات');
+      closeOverlay('editOverlay');
+      refresh();
+    } else toast(d.message || 'فشل');
+  }
   async function del(id, name) {
     if (!confirm('حذف الطالب "' + name + '"؟')) return;
     const d = await api({ action: 'admin', op: 'delete', id });
@@ -678,6 +729,7 @@
   window.saveApi=saveApi; window.doLogin=doLogin; window.doLogout=doLogout;
   window.refresh=refresh; window.adjust=adjust; window.addStudent=addStudent; window.del=del;
   window.openPayment=openPayment; window.submitPayment=submitPayment;
+ window.openEdit=openEdit; window.submitEdit=submitEdit;
   window.openHistory=openHistory;
   window.sendWhatsApp=sendWhatsApp; window.copyLink=copyLink;
   window.openShareCenter=openShareCenter; window.exportCSV=exportCSV;
