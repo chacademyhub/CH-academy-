@@ -21,7 +21,7 @@
   .card h4 { color: #333; font-size: 15px; margin-bottom: 5px; }
   .card .price { color: #2e7d32; font-weight: bold; font-size: 18px; }
   .card .sessions { color: #666; font-size: 12px; }
-  .card .desc { color: #666; font-size: 12px; margin-top: 5px; }
+  .card .desc { color: #666; font-size: 12px; margin-top: 5px; text-align: right; line-height: 1.4; }
   
   input, select, textarea { width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 8px; margin-bottom: 12px; font-family: inherit; }
   input:focus, select:focus, textarea:focus { outline: none; border-color: #E67E22; }
@@ -62,13 +62,11 @@
 
     <div class="section-title">🏊‍♂️ الباكدجات المتاحة (اختر واحدة)</div>
     <div class="packages" id="packagesList">
-      <!-- سيتم تحميلها من السيرفر -->
       <p style="color:#999;">جاري التحميل...</p>
     </div>
 
     <div class="section-title">🏅 مستويات السباحة (للاطلاع)</div>
-    <div class="levels" id="levelsList">
-      <!-- سيتم تحميلها من السيرفر -->
+    <div class="levels" id="levelsList" style="flex-direction: column;">
       <p style="color:#999;">جاري التحميل...</p>
     </div>
 
@@ -78,11 +76,10 @@
 </div>
 
 <script>
-  let API_URL = 'https://script.google.com/macros/s/AKfycbyf20R8B-0IAIAvHmfm-U4G8WDAYKd6Evky1UR_2lkECDoyoWRRynS-k2p40_PVXJ-J8Q/exec';
+  // تم تحديث الرابط الجديد هنا
+  let API_URL = 'https://script.google.com/macros/s/AKfycbxaC4pnWsxR0hx_nbGtcDlOQm_GmKqIWEYRosdC44XpUDmJ8SfzgRujSn8CuGkp6BDfVA/exec';
   let selectedPkg = '';
-  let selectedLvl = '';
 
-  // تحميل الباكدجات والمستويات
   window.onload = function() {
     fetch(API_URL + '?action=get_public_data')
       .then(r => r.json())
@@ -101,11 +98,13 @@
   function renderPackages(pkgs) {
     const container = document.getElementById('packagesList');
     if (!pkgs || !pkgs.length) { container.innerHTML = '<p>لا توجد باكدجات متاحة حالياً.</p>'; return; }
+    
+    // التصحيح هنا: بنقرأ الاسم والسعر كـ object مش array
     container.innerHTML = pkgs.map(p => `
-      <div class="card" onclick="selectPkg(this, '${p[1]}')">
-        <h4>${p[1]}</h4>
-        <div class="price">${p[3]} د.إ</div>
-        <div class="sessions">${p[2]} حصة</div>
+      <div class="card" onclick="selectPkg(this, '${p.name}')">
+        <h4>${p.name}</h4>
+        <div class="price">${p.price} د.إ</div>
+        <div class="sessions">${p.sessions} حصة</div>
       </div>
     `).join('');
   }
@@ -113,10 +112,12 @@
   function renderLevels(lvls) {
     const container = document.getElementById('levelsList');
     if (!lvls || !lvls.length) { container.innerHTML = '<p>لا توجد مستويات مضافة.</p>'; return; }
+    
+    // التصحيح هنا برضه
     container.innerHTML = lvls.map(l => `
-      <div class="card" style="min-width: 200px; text-align: right;">
-        <h4>${l[1]}</h4>
-        <div class="desc">${l[2]}</div>
+      <div class="card" style="min-width: 100%; text-align: right; cursor: default;">
+        <h4 style="color:#1565c0;">${l.name}</h4>
+        <div class="desc">${l.desc}</div>
       </div>
     `).join('');
   }
@@ -142,7 +143,7 @@
       email: document.getElementById('email').value,
       schedule: document.getElementById('schedule').value,
       packageName: selectedPkg,
-      levelName: '' // يمكن تركه فارغاً أو إضافته لاحقاً
+      levelName: '' 
     };
 
     const qs = Object.entries(params).map(([k,v]) => encodeURIComponent(k) + '=' + encodeURIComponent(v)).join('&');
