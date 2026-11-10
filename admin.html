@@ -82,9 +82,9 @@
 <body>
 <div class="container">
   <div class="header">
-    <img src="logo.svg" alt="C.H Academy" onerror="this.style.display='none'">
+    <img src="logo.png" alt="C.H Academy" onerror="this.style.display='none'">
     <h1>C.H Academy</h1>
-    <p class="subtitle">لوحة الإدارة — v3.0</p>
+    <p class="subtitle">لوحة الإدارة — v3.1</p>
   </div>
 
   <div id="setupView" class="panel" style="display:none;">
@@ -113,10 +113,12 @@
     <div style="background:#fff;padding:16px;border-radius:12px;margin-bottom:16px;border-right:4px solid #E67E22;">
       <h3 style="margin-bottom:12px;color:#E67E22;font-size:16px;">➕ إضافة طالب</h3>
       <div style="display:flex;gap:8px;flex-wrap:wrap;">
-        <input id="newId"    placeholder="الرقم"        style="flex:1;min-width:110px;">
-        <input id="newName"  placeholder="اسم الطالب"   style="flex:2;min-width:170px;">
-        <input id="newTotal" placeholder="الحصص" type="number" style="flex:1;min-width:90px;">
-        <input id="newPhone" placeholder="جوال ولي الأمر" style="flex:2;min-width:180px;" dir="ltr">
+        <input id="newId"       placeholder="الرقم"        style="flex:1;min-width:110px;">
+        <input id="newName"     placeholder="اسم الطالب"   style="flex:2;min-width:170px;">
+        <input id="newTotal"    placeholder="الحصص" type="number" style="flex:1;min-width:90px;">
+        <input id="newPhone"    placeholder="جوال ولي الأمر" style="flex:2;min-width:180px;" dir="ltr">
+        <input id="newEmail"    placeholder="إيميل ولي الأمر" style="flex:2;min-width:180px;" dir="ltr">
+        <input id="newSchedule" placeholder="المواعيد (مثال: السبت 5 م)" style="flex:2;min-width:180px;">
         <button class="green" onclick="addStudent()">إضافة</button>
       </div>
     </div>
@@ -225,7 +227,7 @@
 
     <div id="tabNotify" class="tab-content">
       <div class="section">
-        <h3>📧 إيميل الإشعارات</h3>
+        <h3>📧 إيميل الإشعارات (للمدرب)</h3>
         <input type="email" id="adminEmail" dir="ltr">
       </div>
       <div class="section">
@@ -353,7 +355,7 @@
       else if (s.remaining <= 2) cls = 'low';
       const ph = s.phone ? `<div class="phone">📱 ${esc(s.phone)}</div>` : '';
       const payDate = s.lastPaymentDate ? ' (آخر دفعة: ' + fmtDate(s.lastPaymentDate) + ')' : '';
-      const pay = s.paid > 0 ? <div class="paid">💰 مدفوع: ${s.paid} درهم ${payDate}</div> : '<div class="paid" style="color:#999;">💰 لم يُسجّل دفع</div>';
+      const pay = s.paid > 0 ? `<div class="paid">💰 مدفوع: ${s.paid} درهم ${payDate}</div>` : '<div class="paid" style="color:#999;">💰 لم يُسجّل دفع</div>';
       return `<div class="card">
         <div class="info">
           <div class="name">${esc(s.name)}</div>
@@ -389,11 +391,13 @@
     const name = document.getElementById('newName').value.trim();
     const total = document.getElementById('newTotal').value || 0;
     const phone = document.getElementById('newPhone').value.trim();
+    const email = document.getElementById('newEmail').value.trim();
+    const schedule = document.getElementById('newSchedule').value.trim();
     if (!id || !name) return toast('الرقم والاسم مطلوبان');
-    const d = await api({ action: 'admin', op: 'add_student', id, name, total, phone });
+    const d = await api({ action: 'admin', op: 'add_student', id, name, total, phone, email, schedule });
     if (d.success) {
       toast('تمت الإضافة — المفتاح: ' + d.secret);
-      ['newId','newName','newTotal','newPhone'].forEach(x => document.getElementById(x).value = '');
+      ['newId','newName','newTotal','newPhone','newEmail','newSchedule'].forEach(x => document.getElementById(x).value = '');
       refresh();
     } else toast(d.message || 'فشل');
   }
