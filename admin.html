@@ -348,15 +348,19 @@
     location.reload();
   }
 
-  async function api(params) {
+    async function api(params) {
     params.token = TOKEN;
+    params.action = 'admin'; // إجبار النظام على وضع التعديل
     const qs = Object.entries(params).map(([k,v]) => encodeURIComponent(k) + '=' + encodeURIComponent(v)).join('&');
-    const r = await fetch(API_URL + '?' + qs);
+    
+    // مسح أي علامات استفهام أو بيانات قديمة ملزوقة في الرابط
+    const cleanUrl = API_URL.split('?')[0].split('&')[0]; 
+    
+    const r = await fetch(cleanUrl + '?' + qs);
     const d = await r.json();
     if (d.code === 'AUTH') { toast('انتهت الجلسة'); doLogout(); }
     return d;
   }
-
   async function refresh() {
     try {
       const d = await api({ action: 'admin', op: 'list' });
