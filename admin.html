@@ -84,7 +84,7 @@
   <div class="header">
     <img src="logo.png" alt="C.H Academy" onerror="this.style.display='none'">
     <h1>C.H Academy</h1>
-    <p class="subtitle">لوحة الإدارة — v3.2</p>
+    <p class="subtitle">لوحة الإدارة — v4.0</p>
   </div>
 
   <div id="setupView" class="panel" style="display:none;">
@@ -105,8 +105,10 @@
       <input type="text" id="search" placeholder="🔍 ابحث..." oninput="render()">
       <button class="wa" onclick="openNotifications()">🔔 تنبيهات</button>
       <button class="gold" onclick="openShareCenter()">📤 مشاركة</button>
+      <button class="blue" onclick="openRegistrations()">📝 طلبات التسجيل</button>
+      <button class="gray" onclick="openPackages()">📦 الباكدجات</button>
+      <button class="gray" onclick="openLevels()">🏅 المستويات</button>
       <button class="green" onclick="openSettings()">⚙️</button>
-      <button class="gray" onclick="refresh()">🔄</button>
       <button class="red" onclick="doLogout()">خروج</button>
     </div>
 
@@ -128,6 +130,7 @@
   </div>
 </div>
 
+<!-- Overlays -->
 <div id="shareOverlay" class="overlay">
   <div class="overlay-header">
     <button class="gold" onclick="exportCSV()">📥 تصدير CSV</button>
@@ -152,6 +155,7 @@
   </div>
   <div id="historyContent" style="max-width:700px;margin:0 auto;"></div>
 </div>
+
 <div id="editOverlay" class="overlay">
   <div class="overlay-header">
     <button class="red" onclick="closeOverlay('editOverlay')">❌ إغلاق</button>
@@ -174,6 +178,7 @@
     <button class="green" onclick="submitEdit()" style="width:100%;margin-top:15px;">💾 حفظ التعديلات</button>
   </div>
 </div>
+
 <div id="paymentOverlay" class="overlay">
   <div class="overlay-header">
     <button class="red" onclick="closeOverlay('paymentOverlay')">❌ إغلاق</button>
@@ -188,6 +193,54 @@
     </select>
     <input type="text" id="payNote" placeholder="ملاحظة (اختياري)">
     <button class="green" onclick="submitPayment()" style="width:100%;">💰 تسجيل الدفعة</button>
+  </div>
+</div>
+
+<!-- شاشة طلبات التسجيل -->
+<div id="registrationsOverlay" class="overlay">
+  <div class="overlay-header">
+    <button class="red" onclick="closeOverlay('registrationsOverlay')">❌ إغلاق</button>
+  </div>
+  <div id="regList" style="max-width:800px;margin:0 auto;"></div>
+</div>
+
+<!-- شاشة إدارة الباكدجات -->
+<div id="packagesOverlay" class="overlay">
+  <div class="overlay-header">
+    <button class="red" onclick="closeOverlay('packagesOverlay')">❌ إغلاق</button>
+  </div>
+  <div style="max-width:600px;margin:0 auto;background:#fff;padding:20px;border-radius:16px;">
+    <h2 style="margin-bottom:15px;color:#E67E22;">📦 إدارة الباكدجات</h2>
+    <input type="hidden" id="pkgId">
+    <label>اسم الباكدج</label>
+    <input type="text" id="pkgName" placeholder="مثال: باكدج المبتدئين">
+    <label>عدد الحصص</label>
+    <input type="number" id="pkgSessions" placeholder="8">
+    <label>السعر (درهم)</label>
+    <input type="number" id="pkgPrice" placeholder="500">
+    <button class="green" onclick="savePkg()" style="width:100%;">💾 حفظ الباكدج</button>
+    
+    <h3 style="margin-top:20px;color:#333;">الباكدجات الحالية</h3>
+    <div id="pkgList" style="margin-top:10px;"></div>
+  </div>
+</div>
+
+<!-- شاشة إدارة المستويات -->
+<div id="levelsOverlay" class="overlay">
+  <div class="overlay-header">
+    <button class="red" onclick="closeOverlay('levelsOverlay')">❌ إغلاق</button>
+  </div>
+  <div style="max-width:600px;margin:0 auto;background:#fff;padding:20px;border-radius:16px;">
+    <h2 style="margin-bottom:15px;color:#1565c0;">🏅 إدارة المستويات</h2>
+    <input type="hidden" id="lvlId">
+    <label>اسم المستوى</label>
+    <input type="text" id="lvlName" placeholder="مثال: المستوى الأول">
+    <label>الوصف</label>
+    <input type="text" id="lvlDesc" placeholder="مثال: تعلم الطفو والتنفس">
+    <button class="green" onclick="saveLvl()" style="width:100%;">💾 حفظ المستوى</button>
+    
+    <h3 style="margin-top:20px;color:#333;">المستويات الحالية</h3>
+    <div id="lvlList" style="margin-top:10px;"></div>
   </div>
 </div>
 
@@ -280,18 +333,12 @@
 <div class="toast" id="toast"></div>
 
 <script>
-let API_URL = 'https://script.google.com/macros/s/AKfycbyf20R8B-0IAIAvHmfm-U4G8WDAYKd6Evky1UR_2lkECDoyoWRRynS-k2p40_PVXJ-J8Q/exec';
- let TOKEN     = sessionStorage.getItem('ch_token') || '';
+  let API_URL = 'https://script.google.com/macros/s/AKfycbyf20R8B-0IAIAvHmfm-U4G8WDAYKd6Evky1UR_2lkECDoyoWRRynS-k2p40_PVXJ-J8Q/exec';
+  let TOKEN     = sessionStorage.getItem('ch_token') || '';
   let STUDENTS  = [];
   let CONFIG    = {};
   let SITE_BASE = window.location.origin + window.location.pathname.replace('admin.html','').replace(/\/$/, '') + '/';
   let CURRENT_STUDENT = null;
-
-  (function() {
-    const p = new URLSearchParams(window.location.search);
-    const apiParam = p.get('api');
-    if (apiParam) { API_URL = apiParam; localStorage.setItem('ch_api_url', API_URL); }
-  })();
 
   function toast(msg) {
     const t = document.getElementById('toast');
@@ -348,16 +395,17 @@ let API_URL = 'https://script.google.com/macros/s/AKfycbyf20R8B-0IAIAvHmfm-U4G8W
     location.reload();
   }
 
-      async function api(params) {
+  async function api(params) {
     params.token = TOKEN;
-    params.action = 'admin'; 
+    params.action = 'admin';
     const qs = Object.entries(params).map(([k,v]) => encodeURIComponent(k) + '=' + encodeURIComponent(v)).join('&');
-    const cleanUrl = API_URL.split('?')[0].split('&')[0]; 
+    const cleanUrl = API_URL.split('?')[0].split('&')[0];
     const r = await fetch(cleanUrl + '?' + qs);
     const d = await r.json();
     if (d.code === 'AUTH') { toast('انتهت الجلسة'); doLogout(); }
     return d;
   }
+
   async function refresh() {
     try {
       const d = await api({ action: 'admin', op: 'list' });
@@ -426,6 +474,7 @@ let API_URL = 'https://script.google.com/macros/s/AKfycbyf20R8B-0IAIAvHmfm-U4G8W
       refresh();
     } else toast(d.message || 'فشل');
   }
+
   function openEdit(id) {
     const s = STUDENTS.find(x => String(x.id) === String(id));
     if (!s) return toast('غير موجود');
@@ -456,6 +505,7 @@ let API_URL = 'https://script.google.com/macros/s/AKfycbyf20R8B-0IAIAvHmfm-U4G8W
       refresh();
     } else toast(d.message || 'فشل');
   }
+
   async function del(id, name) {
     if (!confirm('حذف الطالب "' + name + '"؟')) return;
     const d = await api({ action: 'admin', op: 'delete', id });
@@ -613,6 +663,160 @@ let API_URL = 'https://script.google.com/macros/s/AKfycbyf20R8B-0IAIAvHmfm-U4G8W
     toast(`فحص ${r.low} • أُرسل ${r.notified}`);
   }
 
+  // ============= طلبات التسجيل =============
+  async function openRegistrations() {
+    openOverlay('registrationsOverlay');
+    const container = document.getElementById('regList');
+    container.innerHTML = '<p style="text-align:center;color:#999;padding:40px;">جاري التحميل...</p>';
+    
+    try {
+      const d = await api({ action: 'admin', op: 'get_registrations' });
+      if (!d.success || !d.registrations.length) {
+        container.innerHTML = '<p style="text-align:center;color:#2e7d32;padding:40px;">✅ لا توجد طلبات تسجيل جديدة</p>';
+        return;
+      }
+      
+      container.innerHTML = d.registrations.map(r => `
+        <div class="history-box" style="border-right: 4px solid #9c27b0;">
+          <h3>👤 ${esc(r.name)} <span style="font-size:12px;color:#666;font-weight:normal;">(${esc(r.phone)})</span></h3>
+          <p style="font-size:13px;color:#444;margin-bottom:5px;"><b>الباكدج المطلوب:</b> ${esc(r.pkg)}</p>
+          <p style="font-size:13px;color:#444;margin-bottom:5px;"><b>المواعيد:</b> ${esc(r.schedule)}</p>
+          ${r.email ? `<p style="font-size:13px;color:#444;margin-bottom:5px;"><b>الإيميل:</b> ${esc(r.email)}</p>` : ''}
+          ${r.dob ? `<p style="font-size:13px;color:#444;margin-bottom:5px;"><b>تاريخ الميلاد:</b> ${esc(r.dob)}</p>` : ''}
+          <div style="display:flex;gap:8px;margin-top:15px;">
+            <button class="green" onclick="approveReg(${r.id}, '${esc(r.name)}')">✅ موافقة وقبول</button>
+            <button class="red" onclick="deleteReg(${r.id})">🗑 رفض وحذف</button>
+          </div>
+        </div>
+      `).join('');
+    } catch (e) { container.innerHTML = '<p style="color:red;text-align:center;">خطأ في التحميل</p>'; }
+  }
+
+  async function approveReg(id, name) {
+    const studentId = prompt(`أدخل رقم الطالب الجديد لـ (${name}):`);
+    if (!studentId) return;
+    const total = prompt(`أدخل عدد الحصص الإجمالي (مثلاً 8 أو 12):`, "8");
+    if (!total) return;
+    
+    toast('جاري الاعتماد...');
+    const d = await api({ action: 'admin', op: 'approve_reg', id, studentId, total });
+    if (d.success) {
+      toast('✅ تم قبول الطالب بنجاح');
+      openRegistrations(); // إعادة تحميل القائمة
+      refresh(); // تحديث قائمة الطلاب
+    } else toast(d.message || 'فشل');
+  }
+
+  async function deleteReg(id) {
+    if (!confirm('هل أنت متأكد من حذف/رفض هذا الطلب؟')) return;
+    const d = await api({ action: 'admin', op: 'delete_reg', id });
+    if (d.success) { toast('تم الحذف'); openRegistrations(); } else toast('فشل');
+  }
+
+  // ============= إدارة الباكدجات =============
+  async function openPackages() {
+    openOverlay('packagesOverlay');
+    loadPackages();
+  }
+  async function loadPackages() {
+    const d = await api({ action: 'admin', op: 'get_pkg_lvl' });
+    if (!d.success) return toast('فشل التحميل');
+    
+    const container = document.getElementById('pkgList');
+    if (!d.packages.length) { container.innerHTML = '<p>لا توجد باكدجات مضافة.</p>'; return; }
+    
+    container.innerHTML = d.packages.map(p => `
+      <div class="history-item" style="border-right-color:#E67E22;">
+        <div>
+          <div style="font-weight:bold;">${esc(p[1])}</div>
+          <div style="font-size:12px;color:#666;">${p[2]} حصة — ${p[3]} د.إ</div>
+        </div>
+        <div style="display:flex;gap:6px;">
+          <button class="small gold" onclick="editPkg('${p[0]}','${esc(p[1])}',${p[2]},${p[3]})">✏️</button>
+          <button class="small red" onclick="deletePkg('${p[0]}')">🗑</button>
+        </div>
+      </div>
+    `).join('');
+  }
+  function editPkg(id, name, sessions, price) {
+    document.getElementById('pkgId').value = id;
+    document.getElementById('pkgName').value = name;
+    document.getElementById('pkgSessions').value = sessions;
+    document.getElementById('pkgPrice').value = price;
+  }
+  async function savePkg() {
+    const id = document.getElementById('pkgId').value;
+    const name = document.getElementById('pkgName').value.trim();
+    const sessions = document.getElementById('pkgSessions').value;
+    const price = document.getElementById('pkgPrice').value;
+    if (!name || !sessions || !price) return toast('أكمل البيانات');
+    const d = await api({ action: 'admin', op: 'save_package', id, name, sessions, price });
+    if (d.success) {
+      toast('✅ تم حفظ الباكدج');
+      document.getElementById('pkgId').value = '';
+      document.getElementById('pkgName').value = '';
+      document.getElementById('pkgSessions').value = '';
+      document.getElementById('pkgPrice').value = '';
+      loadPackages();
+    } else toast('فشل');
+  }
+  async function deletePkg(id) {
+    if (!confirm('حذف الباكدج؟')) return;
+    const d = await api({ action: 'admin', op: 'delete_package', id });
+    if (d.success) { toast('تم الحذف'); loadPackages(); } else toast('فشل');
+  }
+
+  // ============= إدارة المستويات =============
+  async function openLevels() {
+    openOverlay('levelsOverlay');
+    loadLevels();
+  }
+  async function loadLevels() {
+    const d = await api({ action: 'admin', op: 'get_pkg_lvl' });
+    if (!d.success) return toast('فشل التحميل');
+    
+    const container = document.getElementById('lvlList');
+    if (!d.levels.length) { container.innerHTML = '<p>لا توجد مستويات مضافة.</p>'; return; }
+    
+    container.innerHTML = d.levels.map(l => `
+      <div class="history-item" style="border-right-color:#1565c0;">
+        <div>
+          <div style="font-weight:bold;">${esc(l[1])}</div>
+          <div style="font-size:12px;color:#666;">${esc(l[2])}</div>
+        </div>
+        <div style="display:flex;gap:6px;">
+          <button class="small gold" onclick="editLvl('${l[0]}','${esc(l[1])}','${esc(l[2])}')">✏️</button>
+          <button class="small red" onclick="deleteLvl('${l[0]}')">🗑</button>
+        </div>
+      </div>
+    `).join('');
+  }
+  function editLvl(id, name, desc) {
+    document.getElementById('lvlId').value = id;
+    document.getElementById('lvlName').value = name;
+    document.getElementById('lvlDesc').value = desc;
+  }
+  async function saveLvl() {
+    const id = document.getElementById('lvlId').value;
+    const name = document.getElementById('lvlName').value.trim();
+    const desc = document.getElementById('lvlDesc').value.trim();
+    if (!name) return toast('اسم المستوى مطلوب');
+    const d = await api({ action: 'admin', op: 'save_level', id, name, desc });
+    if (d.success) {
+      toast('✅ تم حفظ المستوى');
+      document.getElementById('lvlId').value = '';
+      document.getElementById('lvlName').value = '';
+      document.getElementById('lvlDesc').value = '';
+      loadLevels();
+    } else toast('فشل');
+  }
+  async function deleteLvl(id) {
+    if (!confirm('حذف المستوى؟')) return;
+    const d = await api({ action: 'admin', op: 'delete_level', id });
+    if (d.success) { toast('تم الحذف'); loadLevels(); } else toast('فشل');
+  }
+
+  // ============= الإعدادات =============
   function switchTab(e, tabId) {
     document.querySelectorAll('.tabs button').forEach(b => b.classList.remove('active'));
     e.target.classList.add('active');
@@ -730,11 +934,14 @@ let API_URL = 'https://script.google.com/macros/s/AKfycbyf20R8B-0IAIAvHmfm-U4G8W
   window.saveApi=saveApi; window.doLogin=doLogin; window.doLogout=doLogout;
   window.refresh=refresh; window.adjust=adjust; window.addStudent=addStudent; window.del=del;
   window.openPayment=openPayment; window.submitPayment=submitPayment;
- window.openEdit=openEdit; window.submitEdit=submitEdit;
+  window.openEdit=openEdit; window.submitEdit=submitEdit;
   window.openHistory=openHistory;
   window.sendWhatsApp=sendWhatsApp; window.copyLink=copyLink;
   window.openShareCenter=openShareCenter; window.exportCSV=exportCSV;
   window.openNotifications=openNotifications; window.runNotifyNow=runNotifyNow;
+  window.openRegistrations=openRegistrations; window.approveReg=approveReg; window.deleteReg=deleteReg;
+  window.openPackages=openPackages; window.savePkg=savePkg; window.deletePkg=deletePkg; window.editPkg=editPkg;
+  window.openLevels=openLevels; window.saveLvl=saveLvl; window.deleteLvl=deleteLvl; window.editLvl=editLvl;
   window.openSettings=openSettings; window.closeOverlay=closeOverlay;
   window.switchTab=switchTab; window.saveAllConfig=saveAllConfig;
   window.changePassword=changePassword; window.logoutAll=logoutAll;
