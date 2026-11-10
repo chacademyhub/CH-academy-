@@ -10,7 +10,7 @@
   body { font-family: 'Segoe UI', Tahoma, Arial, sans-serif; background: #f5f7fa; min-height: 100vh; padding: 20px; }
   .container { max-width: 950px; margin: 0 auto; }
   .header { text-align: center; margin-bottom: 22px; }
-  .header img { width: 80px; height: 80px; border-radius: 50%; margin-bottom: 10px; }
+  .header img { width: 140px; height: 140px; border-radius: 50%; margin-bottom: 10px; object-fit: cover; }
   h1 { color: #000; font-size: 24px; font-weight: 900; }
   .subtitle { color: #E67E22; font-size: 12px; letter-spacing: 2px; margin-top: 4px; font-weight: 700; }
   .panel { background: #fff; padding: 30px; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,.08); max-width: 480px; margin: 30px auto; text-align: center; }
@@ -84,7 +84,7 @@
   <div class="header">
     <img src="logo.png" alt="C.H Academy" onerror="this.style.display='none'">
     <h1>C.H Academy</h1>
-    <p class="subtitle">لوحة الإدارة — v3.1</p>
+    <p class="subtitle">لوحة الإدارة — v3.2</p>
   </div>
 
   <div id="setupView" class="panel" style="display:none;">
@@ -118,6 +118,7 @@
         <input id="newTotal"    placeholder="الحصص" type="number" style="flex:1;min-width:90px;">
         <input id="newPhone"    placeholder="جوال ولي الأمر" style="flex:2;min-width:180px;" dir="ltr">
         <input id="newEmail"    placeholder="إيميل ولي الأمر" style="flex:2;min-width:180px;" dir="ltr">
+        <input id="newDob"      type="date" placeholder="تاريخ ميلاد الطفل" style="flex:2;min-width:150px;" title="تاريخ ميلاد الطفل">
         <input id="newSchedule" placeholder="المواعيد (مثال: السبت 5 م)" style="flex:2;min-width:180px;">
         <button class="green" onclick="addStudent()">إضافة</button>
       </div>
@@ -258,7 +259,7 @@
 <div class="toast" id="toast"></div>
 
 <script>
-  let API_URL = localStorage.getItem('ch_api_url') || 'https://script.google.com/macros/s/AKfycbxPf6xBsp_gF8gA9SUe1eCCHT9N0hLM95ax56hkVtVztn6JiTEvm8X8qInHLijiFAHewA/exec';
+  let API_URL = localStorage.getItem('ch_api_url') || 'https://script.google.com/macros/s/AKfycbzmgvldzdOR4c2EbHCs2eanF-TQZI1xGChiiSsuUp1EcSY7eXx5CeM3qa4YJDNuKBcsVg/exec';
   let TOKEN     = sessionStorage.getItem('ch_token') || '';
   let STUDENTS  = [];
   let CONFIG    = {};
@@ -392,12 +393,13 @@
     const total = document.getElementById('newTotal').value || 0;
     const phone = document.getElementById('newPhone').value.trim();
     const email = document.getElementById('newEmail').value.trim();
+    const dob = document.getElementById('newDob').value;
     const schedule = document.getElementById('newSchedule').value.trim();
     if (!id || !name) return toast('الرقم والاسم مطلوبان');
-    const d = await api({ action: 'admin', op: 'add_student', id, name, total, phone, email, schedule });
+    const d = await api({ action: 'admin', op: 'add_student', id, name, total, phone, email, schedule, dob });
     if (d.success) {
       toast('تمت الإضافة — المفتاح: ' + d.secret);
-      ['newId','newName','newTotal','newPhone','newEmail','newSchedule'].forEach(x => document.getElementById(x).value = '');
+      ['newId','newName','newTotal','newPhone','newEmail','newDob','newSchedule'].forEach(x => document.getElementById(x).value = '');
       refresh();
     } else toast(d.message || 'فشل');
   }
