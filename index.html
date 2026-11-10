@@ -28,6 +28,7 @@
   .progress-text { color: #777; font-size: 12px; margin-bottom: 20px; }
   .notice { background: #fff3e0; border: 1px solid #ffb74d; color: #e65100; padding: 10px; border-radius: 10px; font-size: 13px; margin-bottom: 16px; }
   .notice.red { background: #ffebee; border-color: #ef5350; color: #b71c1c; }
+  .schedule-box { display: none; background: #e3f2fd; padding: 12px; border-radius: 10px; margin-bottom: 16px; color: #1565c0; font-weight: bold; font-size: 14px; border: 1px solid #90caf9; }
   .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 16px; }
   .stat { background: linear-gradient(135deg, #f0f8ff, #e3f2fd); padding: 12px; border-radius: 12px; }
   .stat .stat-label { color: #666; font-size: 11px; margin-bottom: 4px; }
@@ -70,6 +71,10 @@
 
     <div id="result" style="display:none;">
       <div class="name" id="studentName"></div>
+      
+      <!-- خانة المواعيد الجديدة -->
+      <div id="scheduleBox" class="schedule-box"></div>
+
       <p class="label" id="remainingLabel">باقي لك</p>
       <div class="sessions" id="remaining"></div>
       <p class="unit" id="unitText">حصة</p>
@@ -125,6 +130,7 @@
       errMissing: '⚠️ رابط ناقص.',
       errNetwork: '📡 تعذر الاتصال.',
       errGeneric: 'حدث خطأ.',
+      scheduleLabel: '🗓️ مواعيد التدريب: ',
       footerDefault: 'C.H Academy © للاستفسار تواصل مع الإدارة'
     },
     en: {
@@ -144,6 +150,7 @@
       errMissing: '⚠️ Incomplete link.',
       errNetwork: '📡 Connection failed.',
       errGeneric: 'Error occurred.',
+      scheduleLabel: '🗓️ Training Schedule: ',
       footerDefault: 'C.H Academy © For inquiries, contact administration'
     }
   };
@@ -212,6 +219,16 @@
     document.getElementById('error').style.display = 'none';
     document.getElementById('result').style.display = 'block';
     document.getElementById('studentName').textContent = d.name;
+    
+    // كود عرض المواعيد
+    const schBox = document.getElementById('scheduleBox');
+    if (d.schedule) {
+      schBox.style.display = 'block';
+      schBox.innerHTML = T[LANG].scheduleLabel + d.schedule;
+    } else {
+      schBox.style.display = 'none';
+    }
+
     const rem = document.getElementById('remaining');
     rem.textContent = d.remaining;
     rem.className = 'sessions';
