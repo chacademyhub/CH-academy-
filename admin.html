@@ -4,104 +4,110 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex,nofollow">
-<title>لوحة الإدارة — C.H Academy</title>
+<title>لوحة الإدارة — Athar physical performance</title>
 <style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'Segoe UI', Tahoma, Arial, sans-serif; background: #f5f7fa; min-height: 100vh; padding: 20px; }
-  .container { max-width: 950px; margin: 0 auto; }
-  .header { text-align: center; margin-bottom: 22px; }
-  .header img {width: 100%; max-width: 320px; height: auto; border-radius: 10px; margin-bottom: 15px; object-fit: contain;}
-  h1 { color: #000; font-size: 24px; font-weight: 900; }
-  .subtitle { color: #E67E22; font-size: 12px; letter-spacing: 2px; margin-top: 4px; font-weight: 700; }
-  .panel { background: #fff; padding: 30px; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,.08); max-width: 480px; margin: 30px auto; text-align: center; }
-  input, textarea, select { width: 100%; padding: 14px; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 15px; margin-bottom: 12px; font-family: inherit; background: #fff; }
-  input:focus, textarea:focus, select:focus { outline: none; border-color: #E67E22; }
-  button { background: #E67E22; color: #fff; border: none; padding: 12px 20px; border-radius: 10px; font-size: 15px; cursor: pointer; font-family: inherit; font-weight: 600; }
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  :root { --primary: #E67E22; --secondary: #F2B01E; --bg: #F2F2F7; --card: #FFFFFF; --text: #1C1C1E; --gray: #8E8E93; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: var(--bg); min-height: 100vh; padding: 20px; color: var(--text); }
+  .container { max-width: 1000px; margin: 0 auto; }
+  .header { text-align: center; margin-bottom: 30px; }
+  .header img { width: 100%; max-width: 300px; height: auto; margin: 0 auto 15px; display: block; border-radius: 10px; }
+  h1 { color: var(--text); font-size: 28px; font-weight: 800; letter-spacing: -0.5px; }
+  .subtitle { color: var(--primary); font-size: 12px; letter-spacing: 2px; margin-top: 4px; font-weight: 700; text-transform: uppercase; }
+  .panel { background: var(--card); padding: 35px; border-radius: 28px; box-shadow: 0 10px 40px rgba(0,0,0,0.04); max-width: 480px; margin: 30px auto; text-align: center; }
+  input, textarea, select { width: 100%; padding: 16px; border: none; background: var(--bg); border-radius: 16px; font-size: 15px; margin-bottom: 12px; font-family: inherit; font-weight: 500; color: var(--text); transition: 0.3s; outline: none; }
+  input:focus, textarea:focus, select:focus { background: #fff; box-shadow: 0 0 0 4px rgba(230, 126, 34, 0.15); }
+  button { background: var(--primary); color: #fff; border: none; padding: 14px 24px; border-radius: 16px; font-size: 15px; cursor: pointer; font-family: inherit; font-weight: 700; transition: 0.2s cubic-bezier(0.25, 0.8, 0.25, 1); box-shadow: 0 4px 15px rgba(230, 126, 34, 0.2); }
+  button:active { transform: scale(0.96); }
   button:hover { background: #d36e17; }
-  button.small { padding: 6px 12px; font-size: 13px; }
-  button.green { background: #2e7d32; }
-  button.red   { background: #c62828; }
-  button.gray  { background: #78909c; }
-  button.gold  { background: #F2B01E; color: #000; }
-  button.wa    { background: #25D366; }
-  button.blue  { background: #1565c0; }
-  .toolbar { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
-  .toolbar input { margin: 0; flex: 1; min-width: 200px; }
-  .card { background: #fff; border-radius: 12px; padding: 16px 20px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; box-shadow: 0 2px 8px rgba(0,0,0,.05); border-right: 4px solid #E67E22; }
+  button.small { padding: 8px 14px; font-size: 13px; border-radius: 12px; box-shadow: none; }
+  button.green { background: #34C759; box-shadow: 0 4px 15px rgba(52, 199, 89, 0.2); }
+  button.red   { background: #FF3B30; box-shadow: 0 4px 15px rgba(255, 59, 48, 0.2); }
+  button.gray  { background: var(--bg); color: var(--text); box-shadow: none; }
+  button.gold  { background: #FFCC00; color: #000; box-shadow: 0 4px 15px rgba(255, 204, 0, 0.2); }
+  button.wa    { background: #25D366; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.2); }
+  button.blue  { background: #007AFF; box-shadow: 0 4px 15px rgba(0, 122, 255, 0.2); }
+  button.purple{ background: #AF52DE; box-shadow: 0 4px 15px rgba(175, 82, 222, 0.2); }
+  .toolbar { display: flex; gap: 10px; margin-bottom: 25px; flex-wrap: wrap; background: rgba(255,255,255,0.7); padding: 12px; border-radius: 20px; backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); box-shadow: 0 4px 20px rgba(0,0,0,0.03); position: sticky; top: 10px; z-index: 100; }
+  .toolbar input { margin: 0; flex: 1; min-width: 200px; background: #fff; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+  .card { background: var(--card); border-radius: 22px; padding: 18px 20px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); transition: 0.3s; }
+  .card:hover { box-shadow: 0 8px 25px rgba(0,0,0,0.06); }
   .info { flex: 1; min-width: 220px; }
-  .info .name { font-weight: 700; color: #222; font-size: 16px; margin-bottom: 4px; }
-  .info .meta { color: #777; font-size: 13px; }
-  .info .phone { color: #1565c0; font-size: 13px; direction: ltr; text-align: right; }
-  .info .paid { color: #2e7d32; font-size: 13px; font-weight: 600; }
-  .info .remaining { color: #2e7d32; font-weight: 700; font-size: 18px; }
-  .info .remaining.low { color: #ef6c00; }
-  .info .remaining.zero { color: #c62828; }
+  .info .name { font-weight: 800; color: var(--text); font-size: 18px; margin-bottom: 6px; letter-spacing: -0.3px; }
+  .info .meta { color: var(--gray); font-size: 13px; font-weight: 500; margin-bottom: 4px; }
+  .info .phone { color: #007AFF; font-size: 14px; direction: ltr; text-align: right; font-weight: 600; margin-top: 4px; }
+  .info .paid { color: #34C759; font-size: 14px; font-weight: 700; margin-top: 4px; }
+  .info .remaining { color: var(--primary); font-weight: 800; font-size: 18px; margin-top: 6px; }
+  .info .remaining.low { color: #FF9500; }
+  .info .remaining.zero { color: #FF3B30; }
   .actions { display: flex; gap: 6px; flex-wrap: wrap; }
-  .toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: #333; color: #fff; padding: 12px 24px; border-radius: 10px; font-size: 14px; opacity: 0; transition: opacity .3s; pointer-events: none; z-index: 9999; max-width: 90%; text-align: center; }
-  .toast.show { opacity: 1; }
-  .overlay { display: none; position: fixed; inset: 0; background: #f5f7fa; z-index: 1000; overflow-y: auto; padding: 16px; }
-  .overlay-header { position: sticky; top: 0; background: #f5f7fa; padding: 12px 0; display: flex; gap: 10px; justify-content: center; margin-bottom: 16px; border-bottom: 2px solid #e0e0e0; z-index: 10; flex-wrap: wrap; }
-  .share-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 12px; max-width: 1100px; margin: 0 auto; }
-  .share-card { background: #fff; border: 2px solid #E67E22; border-radius: 14px; padding: 16px; display: flex; flex-direction: column; gap: 10px; }
-  .share-card .sc-name { font-weight: 900; font-size: 16px; color: #000; }
-  .share-card .sc-meta { color: #777; font-size: 13px; }
-  .share-card .sc-phone { color: #1565c0; font-size: 13px; direction: ltr; text-align: right; }
-  .share-card .sc-url { background: #f5f5f5; padding: 8px; border-radius: 6px; font-size: 11px; color: #555; word-break: break-all; direction: ltr; text-align: left; font-family: monospace; max-height: 55px; overflow: hidden; }
-  .share-card .sc-actions { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 4px; }
-  .share-card .sc-actions button { flex: 1; min-width: 90px; font-size: 13px; padding: 8px; }
-  .notify-card { background: #fff; border: 2px solid #E67E22; border-radius: 14px; padding: 16px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; max-width: 800px; margin-left: auto; margin-right: auto; }
-  .notify-card .nc-name { font-weight: 900; font-size: 16px; }
-  .notify-card .nc-meta { color: #777; font-size: 13px; }
-  .notify-card .nc-remaining { color: #c62828; font-weight: 900; font-size: 18px; }
-  .tabs { display: flex; gap: 6px; margin-bottom: 20px; flex-wrap: wrap; }
-  .tabs button { background: #e0e0e0; color: #555; }
-  .tabs button.active { background: #E67E22; color: #fff; }
+  .toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.8); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); color: #fff; padding: 14px 28px; border-radius: 30px; font-size: 15px; font-weight: 600; opacity: 0; transition: opacity .3s, transform .3s; pointer-events: none; z-index: 9999; }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(-10px); }
+  .overlay { display: none; position: fixed; inset: 0; background: rgba(242, 242, 247, 0.9); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); z-index: 1000; overflow-y: auto; padding: 20px; }
+  .overlay-header { position: sticky; top: 0; padding: 10px 0 20px; display: flex; gap: 10px; justify-content: center; z-index: 10; flex-wrap: wrap; }
+  .share-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 15px; max-width: 1100px; margin: 0 auto; }
+  .share-card { background: #fff; border-radius: 24px; padding: 20px; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+  .share-card .sc-name { font-weight: 800; font-size: 18px; color: var(--text); }
+  .share-card .sc-meta { color: var(--gray); font-size: 14px; font-weight: 500; }
+  .share-card .sc-phone { color: #007AFF; font-size: 14px; direction: ltr; text-align: right; font-weight: 600; }
+  .share-card .sc-url { background: var(--bg); padding: 12px; border-radius: 12px; font-size: 12px; color: var(--gray); word-break: break-all; direction: ltr; text-align: left; font-family: monospace; max-height: 60px; overflow: hidden; }
+  .share-card .sc-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px; }
+  .share-card .sc-actions button { flex: 1; min-width: 100px; font-size: 14px; padding: 10px; }
+  .notify-card { background: #fff; border-radius: 20px; padding: 20px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; max-width: 800px; margin-left: auto; margin-right: auto; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+  .notify-card .nc-name { font-weight: 800; font-size: 17px; color: var(--text); }
+  .notify-card .nc-meta { color: var(--gray); font-size: 14px; font-weight: 500; margin-top: 4px; }
+  .notify-card .nc-remaining { color: #FF3B30; font-weight: 800; font-size: 18px; margin-top: 6px; }
+  .tabs { display: flex; gap: 8px; margin-bottom: 25px; flex-wrap: wrap; justify-content: center; }
+  .tabs button { background: rgba(0,0,0,0.05); color: var(--text); border-radius: 20px; padding: 10px 20px; box-shadow: none; }
+  .tabs button.active { background: var(--primary); color: #fff; box-shadow: 0 4px 15px rgba(230, 126, 34, 0.3); }
   .tab-content { display: none; }
   .tab-content.active { display: block; }
-  .section { background: #fff; padding: 20px; border-radius: 12px; margin-bottom: 16px; border-right: 4px solid #E67E22; max-width: 600px; margin-left: auto; margin-right: auto; }
-  .section h3 { color: #E67E22; font-size: 15px; margin-bottom: 14px; }
-  .section p { color: #666; font-size: 13px; line-height: 1.7; margin-bottom: 12px; }
-  .field-row { display: flex; gap: 8px; align-items: center; margin-bottom: 10px; flex-wrap: wrap; }
-  .field-row label { min-width: 150px; font-size: 13px; color: #333; }
+  .section { background: #fff; padding: 25px; border-radius: 24px; margin-bottom: 20px; max-width: 600px; margin-left: auto; margin-right: auto; box-shadow: 0 10px 30px rgba(0,0,0,0.04); }
+  .section h3 { color: var(--text); font-size: 18px; margin-bottom: 16px; font-weight: 800; letter-spacing: -0.3px; }
+  .section p { color: var(--gray); font-size: 14px; line-height: 1.6; margin-bottom: 16px; }
+  .field-row { display: flex; gap: 10px; align-items: center; margin-bottom: 12px; flex-wrap: wrap; }
+  .field-row label { min-width: 150px; font-size: 14px; color: var(--text); font-weight: 600; }
   .field-row input, .field-row select { margin: 0; flex: 1; }
-  .color-pair { display: flex; gap: 8px; }
-  .color-pair input[type=color] { width: 60px; height: 45px; padding: 4px; cursor: pointer; }
+  .color-pair { display: flex; gap: 10px; }
+  .color-pair input[type=color] { width: 60px; height: 50px; padding: 4px; cursor: pointer; border-radius: 12px; border: none; background: var(--bg); }
   .color-pair input[type=text] { flex: 1; direction: ltr; font-family: monospace; }
-  .history-box { background: #fff; border-radius: 14px; padding: 20px; margin-bottom: 16px; max-width: 700px; margin-left: auto; margin-right: auto; }
-  .history-box h3 { color: #E67E22; font-size: 15px; margin-bottom: 14px; border-bottom: 2px solid #f0f0f0; padding-bottom: 8px; }
-  .history-item { padding: 10px 12px; background: #f9f9f9; border-radius: 8px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; font-size: 13px; border-right: 3px solid #1565c0; }
-  .history-item.pay { border-right-color: #2e7d32; }
-  .history-item .hdate { color: #666; font-size: 12px; direction: ltr; }
-  .history-item .hamount { color: #2e7d32; font-weight: 900; font-size: 15px; }
-  .history-item .hnote { color: #555; flex: 1; min-width: 150px; }
-  .stat-box { background: linear-gradient(135deg, #f0f8ff, #e3f2fd); padding: 14px; border-radius: 10px; text-align: center; margin-bottom: 14px; }
-  .stat-box .label { color: #666; font-size: 12px; }
-  .stat-box .value { color: #1565c0; font-size: 24px; font-weight: 900; }
+  .history-box { background: #fff; border-radius: 24px; padding: 25px; margin-bottom: 20px; max-width: 900px; margin-left: auto; margin-right: auto; box-shadow: 0 10px 30px rgba(0,0,0,0.04); }
+  .history-box h3 { color: var(--text); font-size: 18px; margin-bottom: 20px; font-weight: 800; letter-spacing: -0.3px; }
+  .history-item { padding: 14px 16px; background: var(--bg); border-radius: 16px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; font-size: 14px; }
+  .history-item .hdate { color: var(--gray); font-size: 13px; direction: ltr; font-weight: 500; }
+  .history-item .hamount { color: var(--primary); font-weight: 800; font-size: 16px; }
+  .history-item .hnote { color: var(--text); flex: 1; min-width: 150px; font-weight: 600; }
+  .stat-box { background: var(--bg); padding: 20px; border-radius: 20px; text-align: center; margin-bottom: 16px; }
+  .stat-box .label { color: var(--gray); font-size: 13px; font-weight: 600; margin-bottom: 8px; }
+  .stat-box .value { color: var(--primary); font-size: 28px; font-weight: 800; letter-spacing: -1px; }
+  .schedule-table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 14px; border-radius: 16px; overflow: hidden; }
+  .schedule-table th, .schedule-table td { padding: 14px; text-align: right; border-bottom: 1px solid var(--bg); }
+  .schedule-table th { background: var(--bg); color: var(--gray); font-weight: 700; }
+  .schedule-table tr:last-child td { border-bottom: none; }
 </style>
 </head>
 <body>
 <div class="container">
   <div class="header">
-<img src="logo.png" alt="Athar physical performance" onerror="this.style.display='none'" style="width: 100%; max-width: 300px; height: auto; margin: 0 auto 15px; display: block; border-radius: 10px;">    <h1>C.H Academy</h1>
-    <p class="subtitle">لوحة الإدارة — v4.0</p>
+    <img src="logo.png" alt="Athar physical performance" onerror="this.style.display='none'">
+    <h1>Athar physical performance</h1>
+    <p class="subtitle">لوحة الإدارة — v5.2 Pro Max</p>
   </div>
-
   <div id="setupView" class="panel" style="display:none;">
     <p style="color:#666;line-height:1.7;margin-bottom:15px;"><strong>إعداد لمرة واحدة</strong><br>الصق رابط Apps Script:</p>
     <input type="url" id="setupApi" placeholder="https://script.google.com/macros/s/.../exec" dir="ltr">
     <button onclick="saveApi()" style="width:100%;">حفظ ومتابعة</button>
   </div>
-
   <div id="loginView" class="panel" style="display:none;">
     <p style="color:#666;margin-bottom:18px;">🔐 أدخل كلمة السر</p>
     <input type="password" id="pw" placeholder="كلمة السر" autocomplete="current-password">
     <button onclick="doLogin()" style="width:100%;">دخول</button>
-    <p style="color:#999;font-size:11px;margin-top:14px;">محمي: 4 محاولات / قفل 5 دقائق بعدها</p>
   </div>
-
   <div id="mainView" style="display:none;">
     <div class="toolbar">
       <input type="text" id="search" placeholder="🔍 ابحث..." oninput="render()">
+      <button class="purple" onclick="openWeeklySchedule()">📅 الجدول الأسبوعي</button>
+      <button class="blue" onclick="exportExcel()">📊 تصدير إكسيل</button>
       <button class="wa" onclick="openNotifications()">🔔 تنبيهات</button>
       <button class="gold" onclick="openShareCenter()">📤 مشاركة</button>
       <button class="blue" onclick="openRegistrations()">📝 طلبات التسجيل</button>
@@ -110,143 +116,117 @@
       <button class="green" onclick="openSettings()">⚙️</button>
       <button class="red" onclick="doLogout()">خروج</button>
     </div>
-
-    <div style="background:#fff;padding:16px;border-radius:12px;margin-bottom:16px;border-right:4px solid #E67E22;">
-      <h3 style="margin-bottom:12px;color:#E67E22;font-size:16px;">➕ إضافة طالب</h3>
-      <div style="display:flex;gap:8px;flex-wrap:wrap;">
-        <input id="newId"       placeholder="الرقم"        style="flex:1;min-width:110px;">
-        <input id="newName"     placeholder="اسم الطالب"   style="flex:2;min-width:170px;">
-        <input id="newTotal"    placeholder="الحصص" type="number" style="flex:1;min-width:90px;">
-        <input id="newPhone"    placeholder="جوال ولي الأمر" style="flex:2;min-width:180px;" dir="ltr">
-        <input id="newEmail"    placeholder="إيميل ولي الأمر" style="flex:2;min-width:180px;" dir="ltr">
-        <input id="newDob"      type="date" placeholder="تاريخ ميلاد الطفل" style="flex:2;min-width:150px;" title="تاريخ ميلاد الطفل">
-        <input id="newSchedule" placeholder="المواعيد (مثال: السبت 5 م)" style="flex:2;min-width:180px;">
+    <div style="background:#fff;padding:20px;border-radius:24px;margin-bottom:20px;box-shadow:0 10px 30px rgba(0,0,0,0.04);">
+      <h3 style="margin-bottom:16px;color:var(--text);font-size:18px;font-weight:800;">➕ إضافة طالب جديد</h3>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;">
+        <input id="newId" placeholder="الرقم (فارغ للتلقائي)" style="flex:1;min-width:130px;">
+        <input id="newName" placeholder="اسم الطالب" style="flex:2;min-width:170px;">
+        <input id="newTotal" placeholder="الحصص" type="number" style="flex:1;min-width:90px;">
+        <input id="newPhone" placeholder="جوال ولي الأمر" style="flex:1;min-width:150px;" dir="ltr">
+        <input id="newDob" type="date" placeholder="تاريخ الميلاد" style="flex:1;min-width:140px;">
+        <input id="newLevel" placeholder="الليفل" style="flex:1;min-width:120px;">
+        <input id="newLocation" placeholder="مكان التدريب" style="flex:1;min-width:150px;">
+        <input id="newSchedule" placeholder="المواعيد" style="flex:1;min-width:150px;">
+        <input id="newEmail" placeholder="الإيميل" style="flex:1;min-width:180px;" dir="ltr">
         <button class="green" onclick="addStudent()">إضافة</button>
       </div>
     </div>
-
     <div id="list"></div>
   </div>
 </div>
 
-<!-- Overlays -->
 <div id="shareOverlay" class="overlay">
-  <div class="overlay-header">
-    <button class="gold" onclick="exportCSV()">📥 تصدير CSV</button>
-    <button class="red" onclick="closeOverlay('shareOverlay')">❌ إغلاق</button>
-  </div>
+  <div class="overlay-header"><button class="gold" onclick="exportCSV()">📥 تصدير CSV</button><button class="red" onclick="closeOverlay('shareOverlay')">❌ إغلاق</button></div>
   <div class="share-grid" id="shareGrid"></div>
 </div>
-
 <div id="notifyOverlay" class="overlay">
-  <div class="overlay-header">
-    <button class="green" onclick="runNotifyNow()">▶️ فحص الآن</button>
-    <button class="red" onclick="closeOverlay('notifyOverlay')">❌ إغلاق</button>
-  </div>
-  <div style="max-width:800px;margin:0 auto;">
-    <div id="notifyList"></div>
-  </div>
+  <div class="overlay-header"><button class="green" onclick="runNotifyNow()">▶️ فحص الآن</button><button class="red" onclick="closeOverlay('notifyOverlay')">❌ إغلاق</button></div>
+  <div style="max-width:800px;margin:0 auto;"><div id="notifyList"></div></div>
 </div>
-
 <div id="historyOverlay" class="overlay">
-  <div class="overlay-header">
-    <button class="red" onclick="closeOverlay('historyOverlay')">❌ إغلاق</button>
-  </div>
+  <div class="overlay-header"><button class="red" onclick="closeOverlay('historyOverlay')">❌ إغلاق</button></div>
   <div id="historyContent" style="max-width:700px;margin:0 auto;"></div>
 </div>
-
 <div id="editOverlay" class="overlay">
-  <div class="overlay-header">
-    <button class="red" onclick="closeOverlay('editOverlay')">❌ إغلاق</button>
-  </div>
-  <div style="max-width:500px;margin:0 auto;background:#fff;padding:30px;border-radius:16px;">
-    <h2 id="editStudentTitle" style="margin-bottom:20px;color:#E67E22;"></h2>
+  <div class="overlay-header"><button class="red" onclick="closeOverlay('editOverlay')">❌ إغلاق</button></div>
+  <div style="max-width:500px;margin:0 auto;background:#fff;padding:30px;border-radius:24px;box-shadow:0 10px 30px rgba(0,0,0,0.05);">
+    <h2 id="editStudentTitle" style="margin-bottom:20px;color:var(--text);"></h2>
     <input type="hidden" id="editId">
-    <label style="font-size:13px;color:#666;">اسم الطالب</label>
-    <input type="text" id="editName" style="margin-top:5px;">
-    <label style="font-size:13px;color:#666;">إجمالي الحصص</label>
-    <input type="number" id="editTotal" style="margin-top:5px;">
-    <label style="font-size:13px;color:#666;">جوال ولي الأمر</label>
-    <input type="text" id="editPhone" dir="ltr" style="margin-top:5px;">
-    <label style="font-size:13px;color:#666;">إيميل ولي الأمر</label>
-    <input type="text" id="editEmail" dir="ltr" style="margin-top:5px;">
-    <label style="font-size:13px;color:#666;">تاريخ الميلاد</label>
-    <input type="date" id="editDob" style="margin-top:5px;">
-    <label style="font-size:13px;color:#666;">المواعيد</label>
-    <input type="text" id="editSchedule" style="margin-top:5px;">
+    <label>اسم الطالب</label><input type="text" id="editName">
+    <label>إجمالي الحصص</label><input type="number" id="editTotal">
+    <label>جوال ولي الأمر</label><input type="text" id="editPhone" dir="ltr">
+    <label>الإيميل</label><input type="text" id="editEmail" dir="ltr">
+    <label>تاريخ الميلاد</label><input type="date" id="editDob">
+    <label>الليفل</label><input type="text" id="editLevel">
+    <label>مكان التدريب</label><input type="text" id="editLocation">
+    <label>المواعيد</label><input type="text" id="editSchedule">
     <button class="green" onclick="submitEdit()" style="width:100%;margin-top:15px;">💾 حفظ التعديلات</button>
   </div>
 </div>
-
-<div id="paymentOverlay" class="overlay">
-  <div class="overlay-header">
-    <button class="red" onclick="closeOverlay('paymentOverlay')">❌ إغلاق</button>
+<div id="renewOverlay" class="overlay">
+  <div class="overlay-header"><button class="red" onclick="closeOverlay('renewOverlay')">❌ إغلاق</button></div>
+  <div style="max-width:500px;margin:0 auto;background:#fff;padding:30px;border-radius:24px;box-shadow:0 10px 30px rgba(0,0,0,0.05);">
+    <h2 id="renewStudentName" style="margin-bottom:20px;color:var(--primary);"></h2>
+    <input type="hidden" id="renewId">
+    <label>عدد الحصص المضافة</label><input type="number" id="renewSessions" placeholder="مثال: 8">
+    <label>المبلغ المدفوع (درهم)</label><input type="number" id="renewAmount" placeholder="مثال: 500">
+    <label>ملاحظة</label><input type="text" id="renewNote" value="تجديد اشتراك">
+    <button class="green" onclick="submitRenew()" style="width:100%;margin-top:15px;">🔄 تجديد الاشتراك</button>
   </div>
-  <div style="max-width:500px;margin:0 auto;background:#fff;padding:30px;border-radius:16px;">
-    <h2 id="payStudentName" style="margin-bottom:20px;color:#2e7d32;"></h2>
+</div>
+<div id="paymentOverlay" class="overlay">
+  <div class="overlay-header"><button class="red" onclick="closeOverlay('paymentOverlay')">❌ إغلاق</button></div>
+  <div style="max-width:500px;margin:0 auto;background:#fff;padding:30px;border-radius:24px;box-shadow:0 10px 30px rgba(0,0,0,0.05);">
+    <h2 id="payStudentName" style="margin-bottom:20px;color:var(--primary);"></h2>
     <input type="number" id="payAmount" placeholder="المبلغ (درهم)" min="1">
-    <select id="payMethod">
-      <option value="cash">💵 نقداً</option>
-      <option value="bank">🏦 تحويل بنكي</option>
-      <option value="card">💳 بطاقة</option>
-    </select>
+    <select id="payMethod"><option value="cash">💵 نقداً</option><option value="bank">🏦 تحويل بنكي</option><option value="card">💳 بطاقة</option></select>
     <input type="text" id="payNote" placeholder="ملاحظة (اختياري)">
     <button class="green" onclick="submitPayment()" style="width:100%;">💰 تسجيل الدفعة</button>
   </div>
 </div>
-
-<!-- شاشة طلبات التسجيل -->
-<div id="registrationsOverlay" class="overlay">
-  <div class="overlay-header">
-    <button class="red" onclick="closeOverlay('registrationsOverlay')">❌ إغلاق</button>
+<div id="weeklyScheduleOverlay" class="overlay">
+  <div class="overlay-header"><button class="red" onclick="closeOverlay('weeklyScheduleOverlay')">❌ إغلاق</button></div>
+  <div style="max-width:1000px;margin:0 auto;background:#fff;padding:30px;border-radius:24px;box-shadow:0 10px 30px rgba(0,0,0,0.05);">
+    <h2 style="margin-bottom:20px;color:var(--text);font-weight:800;">📅 الجدول الأسبوعي</h2>
+    <div style="overflow-x: auto;">
+      <table class="schedule-table" id="scheduleTable">
+        <thead><tr><th>الرقم</th><th>اسم الطفل</th><th>السن</th><th>الليفل</th><th>رقم الهاتف</th><th>مكان التدريب</th><th>المواعيد</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
   </div>
+</div>
+<div id="registrationsOverlay" class="overlay">
+  <div class="overlay-header"><button class="red" onclick="closeOverlay('registrationsOverlay')">❌ إغلاق</button></div>
   <div id="regList" style="max-width:800px;margin:0 auto;"></div>
 </div>
-
-<!-- شاشة إدارة الباكدجات -->
 <div id="packagesOverlay" class="overlay">
-  <div class="overlay-header">
-    <button class="red" onclick="closeOverlay('packagesOverlay')">❌ إغلاق</button>
-  </div>
-  <div style="max-width:600px;margin:0 auto;background:#fff;padding:20px;border-radius:16px;">
-    <h2 style="margin-bottom:15px;color:#E67E22;">📦 إدارة الباكدجات</h2>
+  <div class="overlay-header"><button class="red" onclick="closeOverlay('packagesOverlay')">❌ إغلاق</button></div>
+  <div style="max-width:600px;margin:0 auto;background:#fff;padding:30px;border-radius:24px;box-shadow:0 10px 30px rgba(0,0,0,0.05);">
+    <h2 style="margin-bottom:20px;color:var(--text);font-weight:800;">📦 إدارة الباكدجات</h2>
     <input type="hidden" id="pkgId">
-    <label>اسم الباكدج</label>
-    <input type="text" id="pkgName" placeholder="مثال: باكدج المبتدئين">
-    <label>عدد الحصص</label>
-    <input type="number" id="pkgSessions" placeholder="8">
-    <label>السعر (درهم)</label>
-    <input type="number" id="pkgPrice" placeholder="500">
+    <label>اسم الباكدج</label><input type="text" id="pkgName" placeholder="مثال: باكدج المبتدئين">
+    <label>عدد الحصص</label><input type="number" id="pkgSessions" placeholder="8">
+    <label>السعر (درهم)</label><input type="number" id="pkgPrice" placeholder="500">
     <button class="green" onclick="savePkg()" style="width:100%;">💾 حفظ الباكدج</button>
-    
-    <h3 style="margin-top:20px;color:#333;">الباكدجات الحالية</h3>
-    <div id="pkgList" style="margin-top:10px;"></div>
+    <h3 style="margin-top:25px;color:var(--text);font-weight:800;">الباكدجات الحالية</h3>
+    <div id="pkgList" style="margin-top:15px;"></div>
   </div>
 </div>
-
-<!-- شاشة إدارة المستويات -->
 <div id="levelsOverlay" class="overlay">
-  <div class="overlay-header">
-    <button class="red" onclick="closeOverlay('levelsOverlay')">❌ إغلاق</button>
-  </div>
-  <div style="max-width:600px;margin:0 auto;background:#fff;padding:20px;border-radius:16px;">
-    <h2 style="margin-bottom:15px;color:#1565c0;">🏅 إدارة المستويات</h2>
+  <div class="overlay-header"><button class="red" onclick="closeOverlay('levelsOverlay')">❌ إغلاق</button></div>
+  <div style="max-width:600px;margin:0 auto;background:#fff;padding:30px;border-radius:24px;box-shadow:0 10px 30px rgba(0,0,0,0.05);">
+    <h2 style="margin-bottom:20px;color:var(--text);font-weight:800;">🏅 إدارة المستويات</h2>
     <input type="hidden" id="lvlId">
-    <label>اسم المستوى</label>
-    <input type="text" id="lvlName" placeholder="مثال: المستوى الأول">
-    <label>الوصف</label>
-    <input type="text" id="lvlDesc" placeholder="مثال: تعلم الطفو والتنفس">
+    <label>اسم المستوى</label><input type="text" id="lvlName" placeholder="مثال: المستوى الأول">
+    <label>الوصف</label><input type="text" id="lvlDesc" placeholder="مثال: تعلم الطفو والتنفس">
     <button class="green" onclick="saveLvl()" style="width:100%;">💾 حفظ المستوى</button>
-    
-    <h3 style="margin-top:20px;color:#333;">المستويات الحالية</h3>
-    <div id="lvlList" style="margin-top:10px;"></div>
+    <h3 style="margin-top:25px;color:var(--text);font-weight:800;">المستويات الحالية</h3>
+    <div id="lvlList" style="margin-top:15px;"></div>
   </div>
 </div>
-
 <div id="settingsOverlay" class="overlay">
-  <div class="overlay-header">
-    <button class="red" onclick="closeOverlay('settingsOverlay')">❌ إغلاق</button>
-  </div>
+  <div class="overlay-header"><button class="red" onclick="closeOverlay('settingsOverlay')">❌ إغلاق</button></div>
   <div style="max-width:650px;margin:0 auto;">
     <div class="tabs">
       <button class="active" onclick="switchTab(event,'tabSecurity')">🔒 الأمان</button>
@@ -255,705 +235,277 @@
       <button onclick="switchTab(event,'tabNotify')">📧 الإشعارات</button>
       <button onclick="switchTab(event,'tabBackup')">💾 النسخ الاحتياطي</button>
     </div>
-
     <div id="tabSecurity" class="tab-content active">
-      <div class="section">
-        <h3>🔐 تغيير كلمة السر</h3>
-        <input type="password" id="oldPw" placeholder="كلمة السر الحالية">
-        <input type="password" id="newPw" placeholder="الجديدة (8 أحرف على الأقل)">
-        <input type="password" id="newPw2" placeholder="تأكيد الجديدة">
-        <button class="green" onclick="changePassword()" style="width:100%;">💾 تغيير</button>
-      </div>
-      <div class="section">
-        <h3>🚪 إنهاء كل الجلسات</h3>
-        <button class="red" onclick="logoutAll()" style="width:100%;">تسجيل خروج شامل</button>
-      </div>
+      <div class="section"><h3>🔐 تغيير كلمة السر</h3><input type="password" id="oldPw" placeholder="كلمة السر الحالية"><input type="password" id="newPw" placeholder="الجديدة (8 أحرف على الأقل)"><input type="password" id="newPw2" placeholder="تأكيد الجديدة"><button class="green" onclick="changePassword()" style="width:100%;">💾 تغيير</button></div>
+      <div class="section"><h3>🚪 إنهاء كل الجلسات</h3><button class="red" onclick="logoutAll()" style="width:100%;">تسجيل خروج شامل</button></div>
     </div>
-
     <div id="tabBranding" class="tab-content">
-      <div class="section">
-        <h3>🎨 الألوان</h3>
-        <div class="field-row"><label>الأساسي</label>
-          <div class="color-pair"><input type="color" id="primaryColor" oninput="document.getElementById('primaryHex').value=this.value"><input type="text" id="primaryHex" oninput="document.getElementById('primaryColor').value=this.value"></div>
-        </div>
-        <div class="field-row"><label>الثانوي</label>
-          <div class="color-pair"><input type="color" id="secondaryColor" oninput="document.getElementById('secondaryHex').value=this.value"><input type="text" id="secondaryHex" oninput="document.getElementById('secondaryColor').value=this.value"></div>
-        </div>
-      </div>
-      <div class="section">
-        <h3>📝 النصوص</h3>
-        <div class="field-row"><label>اسم الأكاديمية</label><input type="text" id="brandName"></div>
-        <div class="field-row"><label>السطر الثاني</label><input type="text" id="brandSubtitle" dir="ltr"></div>
-        <div class="field-row"><label>تذييل عربي</label><input type="text" id="footerTextAr"></div>
-        <div class="field-row"><label>تذييل إنجليزي</label><input type="text" id="footerTextEn" dir="ltr"></div>
-        <div class="field-row"><label>رقم الاستفسار</label><input type="tel" id="inquiryPhone" dir="ltr"></div>
-      </div>
+      <div class="section"><h3>🎨 الألوان</h3><div class="field-row"><label>الأساسي</label><div class="color-pair"><input type="color" id="primaryColor" oninput="document.getElementById('primaryHex').value=this.value"><input type="text" id="primaryHex" oninput="document.getElementById('primaryColor').value=this.value"></div></div><div class="field-row"><label>الثانوي</label><div class="color-pair"><input type="color" id="secondaryColor" oninput="document.getElementById('secondaryHex').value=this.value"><input type="text" id="secondaryHex" oninput="document.getElementById('secondaryColor').value=this.value"></div></div></div>
+      <div class="section"><h3>📝 النصوص</h3><div class="field-row"><label>اسم الأكاديمية</label><input type="text" id="brandName"></div><div class="field-row"><label>السطر الثاني</label><input type="text" id="brandSubtitle" dir="ltr"></div><div class="field-row"><label>تذييل عربي</label><input type="text" id="footerTextAr"></div><div class="field-row"><label>تذييل إنجليزي</label><input type="text" id="footerTextEn" dir="ltr"></div><div class="field-row"><label>رقم الاستفسار</label><input type="tel" id="inquiryPhone" dir="ltr"></div></div>
     </div>
-
     <div id="tabNumbers" class="tab-content">
-      <div class="section">
-        <h3>📊 حدود التنبيه</h3>
-        <div class="field-row"><label>حد التنبيه (حصص)</label><input type="number" id="lowThreshold"></div>
-        <div class="field-row"><label>فترة تهدئة (أيام)</label><input type="number" id="cooldownDays"></div>
-        <div class="field-row"><label>حد محاولات</label><input type="number" id="maxFails"></div>
-      </div>
+      <div class="section"><h3>📊 حدود التنبيه</h3><div class="field-row"><label>حد التنبيه (حصص)</label><input type="number" id="lowThreshold"></div><div class="field-row"><label>فترة تهدئة (أيام)</label><input type="number" id="cooldownDays"></div><div class="field-row"><label>حد محاولات</label><input type="number" id="maxFails"></div></div>
     </div>
-
     <div id="tabNotify" class="tab-content">
-      <div class="section">
-        <h3>📧 إيميل الإشعارات (للمدرب)</h3>
-        <input type="email" id="adminEmail" dir="ltr">
-      </div>
-      <div class="section">
-        <h3>📱 واتساب (CallMeBot)</h3>
-        <p>أضف <code dir="ltr">+34 644 51 95 23</code> → أرسل <code dir="ltr">I allow callmebot to send me messages</code></p>
-        <div class="field-row"><label>جوالك</label><input type="tel" id="callMeBotPhone" dir="ltr"></div>
-        <div class="field-row"><label>API Key</label><input type="password" id="callMeBotApiKey" dir="ltr"></div>
-      </div>
+      <div class="section"><h3>📧 إيميل الإشعارات (للمدرب)</h3><input type="email" id="adminEmail" dir="ltr"></div>
+      <div class="section"><h3>📱 واتساب (CallMeBot)</h3><p>أضف <code dir="ltr">+34 644 51 95 23</code> → أرسل <code dir="ltr">I allow callmebot to send me messages</code></p><div class="field-row"><label>جوالك</label><input type="tel" id="callMeBotPhone" dir="ltr"></div><div class="field-row"><label>API Key</label><input type="password" id="callMeBotApiKey" dir="ltr"></div></div>
     </div>
-
     <div id="tabBackup" class="tab-content">
-      <div class="section">
-        <h3>💾 حالة النسخ الاحتياطي</h3>
-        <div id="backupStatus" style="margin-bottom:14px;padding:14px;background:#f0fff4;border-radius:8px;"></div>
-        <p>النسخة تُحفظ في مجلد Google Drive باسم <strong>CH_Academy_Backups</strong>.</p>
-        <button class="blue" onclick="backupNow()" style="width:100%;margin-bottom:8px;">💾 نسخة احتياطية الآن</button>
-        <button class="gray" onclick="loadBackupStatus()" style="width:100%;">🔄 تحديث الحالة</button>
-      </div>
+      <div class="section"><h3>💾 حالة النسخ الاحتياطي</h3><div id="backupStatus" style="margin-bottom:14px;padding:14px;background:var(--bg);border-radius:12px;"></div><button class="blue" onclick="backupNow()" style="width:100%;margin-bottom:8px;">💾 نسخة احتياطية الآن</button><button class="gray" onclick="loadBackupStatus()" style="width:100%;">🔄 تحديث الحالة</button></div>
     </div>
-
-    <div style="display:flex;gap:8px;max-width:600px;margin:20px auto;">
-      <button class="green" onclick="saveAllConfig()" style="flex:2;">💾 حفظ</button>
-      <button class="gold" onclick="testNotify()" style="flex:1;">🧪 اختبار</button>
-    </div>
+    <div style="display:flex;gap:10px;max-width:600px;margin:20px auto;"><button class="green" onclick="saveAllConfig()" style="flex:2;">💾 حفظ</button><button class="gold" onclick="testNotify()" style="flex:1;">🧪 اختبار</button></div>
   </div>
 </div>
-
 <div class="toast" id="toast"></div>
-
 <script>
-let API_URL = 'https://script.google.com/macros/s/AKfycbxaC4pnWsxR0hx_nbGtcDlOQm_GmKqIWEYRosdC44XpUDmJ8SfzgRujSn8CuGkp6BDfVA/exec';
- let TOKEN     = sessionStorage.getItem('ch_token') || '';
-  let STUDENTS  = [];
-  let CONFIG    = {};
+  let API_URL = 'https://script.google.com/macros/s/AKfycbytOQxd59nU6cfa46BT-M1ry3alyhG_Jngdm-1GBouf7M32HA8d6jOvWPxOIh1IyCEa8w/exec'; // تم وضع الرابط الجديد هنا
+  let TOKEN = sessionStorage.getItem('ch_token') || '';
+  let STUDENTS = []; let CONFIG = {};
   let SITE_BASE = window.location.origin + window.location.pathname.replace('admin.html','').replace(/\/$/, '') + '/';
   let CURRENT_STUDENT = null;
 
-  function toast(msg) {
-    const t = document.getElementById('toast');
-    t.textContent = msg; t.classList.add('show');
-    setTimeout(() => t.classList.remove('show'), 3200);
-  }
+  function toast(msg) { const t = document.getElementById('toast'); t.textContent = msg; t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 3200); }
   function esc(s) { return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
-  function fmtDate(ts) {
-    if (!ts) return '—';
-    const d = new Date(ts);
-    return d.toLocaleDateString('ar-AE', { year:'numeric', month:'short', day:'numeric' }) + ' ' +
-           d.toLocaleTimeString('ar-AE', { hour:'2-digit', minute:'2-digit' });
-  }
+  function fmtDate(ts) { if (!ts) return '—'; const d = new Date(ts); return d.toLocaleDateString('ar-AE', { year:'numeric', month:'short', day:'numeric' }) + ' ' + d.toLocaleTimeString('ar-AE', { hour:'2-digit', minute:'2-digit' }); }
+  function calcAge(dob) { if(!dob) return '—'; const birth = new Date(dob); const diff = Date.now() - birth.getTime(); const ageDate = new Date(diff); return Math.abs(ageDate.getUTCFullYear() - 1970) + ' سنة'; }
 
-  function saveApi() {
-    const v = document.getElementById('setupApi').value.trim();
-    if (!v.startsWith('https://script.google.com/')) return toast('رابط غير صحيح');
-    API_URL = v; localStorage.setItem('ch_api_url', v); showLogin();
-  }
-  function showSetup() {
-    document.getElementById('setupView').style.display = 'block';
-    document.getElementById('loginView').style.display = 'none';
-    document.getElementById('mainView').style.display = 'none';
-  }
-  function showLogin() {
-    document.getElementById('setupView').style.display = 'none';
-    document.getElementById('loginView').style.display = 'block';
-    document.getElementById('mainView').style.display = 'none';
-  }
+  function saveApi() { const v = document.getElementById('setupApi').value.trim(); if (!v.startsWith('https://script.google.com/')) return toast('رابط غير صحيح'); API_URL = v; localStorage.setItem('ch_api_url', v); showLogin(); }
+  function showSetup() { document.getElementById('setupView').style.display = 'block'; document.getElementById('loginView').style.display = 'none'; document.getElementById('mainView').style.display = 'none'; }
+  function showLogin() { document.getElementById('setupView').style.display = 'none'; document.getElementById('loginView').style.display = 'block'; document.getElementById('mainView').style.display = 'none'; }
 
   async function doLogin() {
-    const pw = document.getElementById('pw').value;
-    if (!pw) return toast('أدخل كلمة السر');
+    const pw = document.getElementById('pw').value; if (!pw) return toast('أدخل كلمة السر');
     try {
-      const r = await fetch(API_URL + '?action=login&password=' + encodeURIComponent(pw));
-      const d = await r.json();
-      if (!d.success) {
-        if (d.code === 'RATE') return toast(`🔒 ${d.message}`);
-        if (d.code === 'AUTH' && d.remaining !== undefined) return toast(`❌ ${d.message}`);
-        return toast(d.message || 'فشل');
-      }
-      TOKEN = d.token;
-      sessionStorage.setItem('ch_token', TOKEN);
-      document.getElementById('pw').value = '';
-      document.getElementById('loginView').style.display = 'none';
-      document.getElementById('mainView').style.display = 'block';
-      refresh();
+      const r = await fetch(API_URL + '?action=login&password=' + encodeURIComponent(pw)); const d = await r.json();
+      if (!d.success) { if (d.code === 'RATE') return toast(`🔒 ${d.message}`); if (d.code === 'AUTH' && d.remaining !== undefined) return toast(`❌ ${d.message}`); return toast(d.message || 'فشل'); }
+      TOKEN = d.token; sessionStorage.setItem('ch_token', TOKEN); document.getElementById('pw').value = '';
+      document.getElementById('loginView').style.display = 'none'; document.getElementById('mainView').style.display = 'block'; refresh();
     } catch (e) { toast('تعذر الاتصال'); }
   }
-
-  async function doLogout() {
-    if (TOKEN) { try { await fetch(API_URL + '?action=logout&token=' + TOKEN); } catch (_) {} }
-    sessionStorage.removeItem('ch_token');
-    location.reload();
-  }
-
+  async function doLogout() { if (TOKEN) { try { await fetch(API_URL + '?action=logout&token=' + TOKEN); } catch (_) {} } sessionStorage.removeItem('ch_token'); location.reload(); }
   async function api(params) {
-    params.token = TOKEN;
-    params.action = 'admin';
+    params.token = TOKEN; params.action = 'admin';
     const qs = Object.entries(params).map(([k,v]) => encodeURIComponent(k) + '=' + encodeURIComponent(v)).join('&');
     const cleanUrl = API_URL.split('?')[0].split('&')[0];
-    const r = await fetch(cleanUrl + '?' + qs);
-    const d = await r.json();
+    const r = await fetch(cleanUrl + '?' + qs); const d = await r.json();
     if (d.code === 'AUTH') { toast('انتهت الجلسة'); doLogout(); }
     return d;
   }
-
-  async function refresh() {
-    try {
-      const d = await api({ action: 'admin', op: 'list' });
-      if (!d.success) return toast('فشل التحميل');
-      STUDENTS = d.students;
-      render();
-    } catch (e) { toast('تعذر الاتصال'); }
-  }
+  async function refresh() { try { const d = await api({ action: 'admin', op: 'list' }); if (!d.success) return toast('فشل التحميل'); STUDENTS = d.students; render(); } catch (e) { toast('تعذر الاتصال'); } }
 
   function render() {
     const q = document.getElementById('search').value.trim().toLowerCase();
     const filtered = q ? STUDENTS.filter(s => s.name.toLowerCase().includes(q) || s.id.includes(q) || (s.phone||'').includes(q)) : STUDENTS;
     const list = document.getElementById('list');
-    if (!filtered.length) { list.innerHTML = '<p style="text-align:center;color:#999;padding:40px;">لا يوجد طلاب</p>'; return; }
+    if (!filtered.length) { list.innerHTML = '<p style="text-align:center;color:var(--gray);padding:40px;font-weight:500;">لا يوجد طلاب</p>'; return; }
     list.innerHTML = filtered.map(s => {
-      let cls = '';
-      if (s.remaining === 0) cls = 'zero';
-      else if (s.remaining <= 2) cls = 'low';
+      let cls = ''; if (s.remaining === 0) cls = 'zero'; else if (s.remaining <= 2) cls = 'low';
       const ph = s.phone ? `<div class="phone">📱 ${esc(s.phone)}</div>` : '';
       const payDate = s.lastPaymentDate ? ' (آخر دفعة: ' + fmtDate(s.lastPaymentDate) + ')' : '';
-      const pay = s.paid > 0 ? `<div class="paid">💰 مدفوع: ${s.paid} درهم ${payDate}</div>` : '<div class="paid" style="color:#999;">💰 لم يُسجّل دفع</div>';
+      const pay = s.paid > 0 ? `<div class="paid">💰 مدفوع: ${s.paid} درهم ${payDate}</div>` : '<div class="paid" style="color:var(--gray);">💰 لم يُسجّل دفع</div>';
       return `<div class="card">
         <div class="info">
           <div class="name">${esc(s.name)}</div>
-          <div class="meta">رقم: ${esc(s.id)} | استُخدم: ${s.used}/${s.total}</div>
+          <div class="meta">رقم: ${esc(s.id)} | استُخدم: ${s.used}/${s.total} | الليفل: ${esc(s.level)||'—'} | المكان: ${esc(s.location)||'—'}</div>
           ${ph}${pay}
           <div class="remaining ${cls}">باقي: ${s.remaining} حصة</div>
         </div>
         <div class="actions">
+          <button class="purple small" onclick="openRenew('${s.id}')">🔄 تجديد</button>
           <button class="green small" onclick="adjust('${s.id}','inc')">+ حصة</button>
           <button class="red small" onclick="adjust('${s.id}','dec')">− حصة</button>
           <button class="blue small" onclick="openPayment('${s.id}')">💰 دفع</button>
           <button class="small gray" onclick="openHistory('${s.id}')">📋 سجل</button>
           <button class="wa small" onclick="sendWhatsApp('${s.id}')">📱</button>
-          <button class="gray small" onclick="del('${s.id}','${esc(s.name)}')">🗑</button>
           <button class="gold small" onclick="openEdit('${s.id}')">✏️ تعديل</button>
+          <button class="gray small" onclick="del('${s.id}','${esc(s.name)}')">🗑</button>
         </div>
       </div>`;
     }).join('');
   }
 
-  async function adjust(id, op) {
-    let note = '';
-    if (op === 'inc') {
-      const input = prompt('ملاحظة على الحصة (اختياري):');
-      if (input === null) return;
-      note = input;
-    }
-    const d = await api({ action: 'admin', op, id, note });
-    if (d.success) { toast('✅ تم التحديث'); refresh(); } else toast(d.message || 'فشل');
-  }
-
+  async function adjust(id, op) { let note = ''; if (op === 'inc') { const input = prompt('ملاحظة على الحصة (اختياري):'); if (input === null) return; note = input; } const d = await api({ action: 'admin', op, id, note }); if (d.success) { toast('✅ تم التحديث'); refresh(); } else toast(d.message || 'فشل'); }
   async function addStudent() {
-    const id = document.getElementById('newId').value.trim();
-    const name = document.getElementById('newName').value.trim();
-    const total = document.getElementById('newTotal').value || 0;
-    const phone = document.getElementById('newPhone').value.trim();
-    const email = document.getElementById('newEmail').value.trim();
-    const dob = document.getElementById('newDob').value;
-    const schedule = document.getElementById('newSchedule').value.trim();
-    if (!id || !name) return toast('الرقم والاسم مطلوبان');
-    const d = await api({ action: 'admin', op: 'add_student', id, name, total, phone, email, schedule, dob });
-    if (d.success) {
-      toast('تمت الإضافة — المفتاح: ' + d.secret);
-      ['newId','newName','newTotal','newPhone','newEmail','newDob','newSchedule'].forEach(x => document.getElementById(x).value = '');
-      refresh();
-    } else toast(d.message || 'فشل');
+    const id = document.getElementById('newId').value.trim(); const name = document.getElementById('newName').value.trim(); const total = document.getElementById('newTotal').value || 0;
+    const phone = document.getElementById('newPhone').value.trim(); const email = document.getElementById('newEmail').value.trim(); const dob = document.getElementById('newDob').value;
+    const schedule = document.getElementById('newSchedule').value.trim(); const location = document.getElementById('newLocation').value.trim(); const level = document.getElementById('newLevel').value.trim();
+    if (!name) return toast('الاسم مطلوب');
+    const d = await api({ action: 'admin', op: 'add_student', id, name, total, phone, email, schedule, dob, location, level });
+    if (d.success) { toast('تمت الإضافة — المفتاح: ' + d.secret); ['newId','newName','newTotal','newPhone','newEmail','newDob','newSchedule','newLocation','newLevel'].forEach(x => document.getElementById(x).value = ''); refresh(); } else toast(d.message || 'فشل');
   }
-
   function openEdit(id) {
-    const s = STUDENTS.find(x => String(x.id) === String(id));
-    if (!s) return toast('غير موجود');
-    document.getElementById('editId').value = s.id;
-    document.getElementById('editStudentTitle').textContent = '✏️ تعديل: ' + s.name;
-    document.getElementById('editName').value = s.name || '';
-    document.getElementById('editTotal').value = s.total || 0;
-    document.getElementById('editPhone').value = s.phone || '';
-    document.getElementById('editEmail').value = s.email || '';
-    document.getElementById('editDob').value = s.dob || '';
-    document.getElementById('editSchedule').value = s.schedule || '';
+    const s = STUDENTS.find(x => String(x.id) === String(id)); if (!s) return toast('غير موجود');
+    document.getElementById('editId').value = s.id; document.getElementById('editStudentTitle').textContent = '✏️ تعديل: ' + s.name;
+    document.getElementById('editName').value = s.name || ''; document.getElementById('editTotal').value = s.total || 0;
+    document.getElementById('editPhone').value = s.phone || ''; document.getElementById('editEmail').value = s.email || '';
+    document.getElementById('editDob').value = s.dob || ''; document.getElementById('editSchedule').value = s.schedule || '';
+    document.getElementById('editLocation').value = s.location || ''; document.getElementById('editLevel').value = s.level || '';
     openOverlay('editOverlay');
   }
-
   async function submitEdit() {
-    const id = document.getElementById('editId').value;
-    const name = document.getElementById('editName').value.trim();
-    const total = document.getElementById('editTotal').value;
-    const phone = document.getElementById('editPhone').value.trim();
-    const email = document.getElementById('editEmail').value.trim();
-    const dob = document.getElementById('editDob').value;
-    const schedule = document.getElementById('editSchedule').value.trim();
+    const id = document.getElementById('editId').value; const name = document.getElementById('editName').value.trim(); const total = document.getElementById('editTotal').value;
+    const phone = document.getElementById('editPhone').value.trim(); const email = document.getElementById('editEmail').value.trim(); const dob = document.getElementById('editDob').value;
+    const schedule = document.getElementById('editSchedule').value.trim(); const location = document.getElementById('editLocation').value.trim(); const level = document.getElementById('editLevel').value.trim();
     if (!name) return toast('الاسم مطلوب');
-    const d = await api({ action: 'admin', op: 'edit_student', id, name, total, phone, email, dob, schedule });
-    if (d.success) {
-      toast('✅ تم تعديل البيانات');
-      closeOverlay('editOverlay');
-      refresh();
-    } else toast(d.message || 'فشل');
+    const d = await api({ action: 'admin', op: 'edit_student', id, name, total, phone, email, dob, schedule, location, level });
+    if (d.success) { toast('✅ تم تعديل البيانات'); closeOverlay('editOverlay'); refresh(); } else toast(d.message || 'فشل');
   }
-
-  async function del(id, name) {
-    if (!confirm('حذف الطالب "' + name + '"؟')) return;
-    const d = await api({ action: 'admin', op: 'delete', id });
-    if (d.success) { toast('تم الحذف'); refresh(); } else toast('فشل');
+  function openRenew(id) {
+    const s = STUDENTS.find(x => String(x.id) === String(id)); if (!s) return toast('غير موجود');
+    document.getElementById('renewId').value = s.id; document.getElementById('renewStudentName').textContent = '🔄 تجديد اشتراك: ' + s.name;
+    document.getElementById('renewSessions').value = ''; document.getElementById('renewAmount').value = ''; openOverlay('renewOverlay');
   }
-
+  async function submitRenew() {
+    const id = document.getElementById('renewId').value; const addedTotal = document.getElementById('renewSessions').value; const amount = document.getElementById('renewAmount').value; const note = document.getElementById('renewNote').value.trim();
+    if (!addedTotal || addedTotal <= 0) return toast('أدخل عدد الحصص'); if (!amount || amount <= 0) return toast('أدخل المبلغ');
+    const d = await api({ action: 'admin', op: 'renew_student', id, addedTotal, amount, note });
+    if (d.success) { toast('✅ تم تجديد الاشتراك بنجاح'); closeOverlay('renewOverlay'); refresh(); } else toast(d.message || 'فشل');
+  }
+  async function del(id, name) { if (!confirm('حذف الطالب "' + name + '"؟')) return; const d = await api({ action: 'admin', op: 'delete', id }); if (d.success) { toast('تم الحذف'); refresh(); } else toast('فشل'); }
   function openPayment(id) {
-    const s = STUDENTS.find(x => String(x.id) === String(id));
-    if (!s) return;
-    CURRENT_STUDENT = s;
-    document.getElementById('payStudentName').textContent = '💰 ' + s.name + ' — مدفوع سابقاً: ' + s.paid + ' درهم';
-    document.getElementById('payAmount').value = '';
-    document.getElementById('payNote').value = '';
-    document.getElementById('payMethod').value = 'cash';
-    openOverlay('paymentOverlay');
-    setTimeout(() => document.getElementById('payAmount').focus(), 100);
+    const s = STUDENTS.find(x => String(x.id) === String(id)); if (!s) return;
+    CURRENT_STUDENT = s; document.getElementById('payStudentName').textContent = '💰 ' + s.name + ' — مدفوع سابقاً: ' + s.paid + ' درهم';
+    document.getElementById('payAmount').value = ''; document.getElementById('payNote').value = ''; document.getElementById('payMethod').value = 'cash';
+    openOverlay('paymentOverlay'); setTimeout(() => document.getElementById('payAmount').focus(), 100);
   }
-
   async function submitPayment() {
-    if (!CURRENT_STUDENT) return;
-    const amount = document.getElementById('payAmount').value;
-    if (!amount || Number(amount) <= 0) return toast('أدخل مبلغاً صحيحاً');
-    const method = document.getElementById('payMethod').value;
-    const note = document.getElementById('payNote').value.trim();
+    if (!CURRENT_STUDENT) return; const amount = document.getElementById('payAmount').value; if (!amount || Number(amount) <= 0) return toast('أدخل مبلغاً صحيحاً');
+    const method = document.getElementById('payMethod').value; const note = document.getElementById('payNote').value.trim();
     const d = await api({ action: 'admin', op: 'log_payment', id: CURRENT_STUDENT.id, amount, method, note });
-    if (d.success) {
-      toast('✅ تم تسجيل ' + amount + ' درهم');
-      closeOverlay('paymentOverlay');
-      refresh();
-    } else toast(d.message || 'فشل');
+    if (d.success) { toast('✅ تم تسجيل ' + amount + ' درهم'); closeOverlay('paymentOverlay'); refresh(); } else toast(d.message || 'فشل');
   }
-
   async function openHistory(id) {
-    const d = await api({ action: 'admin', op: 'student_history', id });
-    if (!d.success) return toast('فشل');
+    const d = await api({ action: 'admin', op: 'student_history', id }); if (!d.success) return toast('فشل');
     const s = d.student;
-    let html = `<div class="history-box">
-      <h3>👤 ${esc(s.name)}</h3>
-      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:16px;">
-        <div class="stat-box"><div class="label">الحصص المتبقية</div><div class="value">${s.remaining}</div></div>
-        <div class="stat-box"><div class="label">استُخدمت</div><div class="value">${s.used}/${s.total}</div></div>
-        <div class="stat-box"><div class="label">مدفوع</div><div class="value" style="color:#2e7d32;">${s.paid} د.إ</div></div>
-      </div>
-      ${s.lastPaymentDate ? `<p style="color:#666;font-size:13px;margin-bottom:10px;">آخر دفعة: ${fmtDate(s.lastPaymentDate)}</p>` : ''}
-    </div>`;
-
+    let html = `<div class="history-box"><h3>👤 ${esc(s.name)}</h3><div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:16px;"><div class="stat-box"><div class="label">الحصص المتبقية</div><div class="value">${s.remaining}</div></div><div class="stat-box"><div class="label">استُخدمت</div><div class="value">${s.used}/${s.total}</div></div><div class="stat-box"><div class="label">مدفوع</div><div class="value">${s.paid} د.إ</div></div></div></div>`;
     html += `<div class="history-box"><h3>📋 سجل الحضور (${d.attendance.length})</h3>`;
-    if (!d.attendance.length) html += '<p style="color:#999;text-align:center;padding:20px;">لا توجد حصص مسجلة</p>';
-    else html += d.attendance.map(a => `
-      <div class="history-item">
-        <div class="hnote">${esc(a.note) || '<span style="color:#ccc;">بدون ملاحظة</span>'}</div>
-        <div class="hdate">${fmtDate(a.date)}</div>
-      </div>`).join('');
+    if (!d.attendance.length) html += '<p style="color:var(--gray);text-align:center;padding:20px;font-weight:500;">لا توجد حصص مسجلة</p>';
+    else html += d.attendance.map(a => `<div class="history-item"><div class="hnote">${esc(a.note) || '<span style="color:var(--gray);">بدون ملاحظة</span>'}</div><div class="hdate">${fmtDate(a.date)}</div></div>`).join('');
     html += '</div>';
-
     html += `<div class="history-box"><h3>💰 سجل المدفوعات (${d.payments.length})</h3>`;
-    if (!d.payments.length) html += '<p style="color:#999;text-align:center;padding:20px;">لا توجد مدفوعات</p>';
-    else html += d.payments.map(p => `
-      <div class="history-item pay">
-        <div class="hamount">${p.amount} د.إ</div>
-        <div class="hnote">${esc(p.note) || ({cash:'نقداً',bank:'تحويل',card:'بطاقة'}[p.method] || p.method)}</div>
-        <div class="hdate">${fmtDate(p.date)}</div>
-      </div>`).join('');
+    if (!d.payments.length) html += '<p style="color:var(--gray);text-align:center;padding:20px;font-weight:500;">لا توجد مدفوعات</p>';
+    else html += d.payments.map(p => `<div class="history-item pay"><div class="hamount">${p.amount} د.إ</div><div class="hnote">${esc(p.note) || ({cash:'نقداً',bank:'تحويل',card:'بطاقة'}[p.method] || p.method)}</div><div class="hdate">${fmtDate(p.date)}</div></div>`).join('');
     html += '</div>';
+    document.getElementById('historyContent').innerHTML = html; openOverlay('historyOverlay');
+  }
+  async function openWeeklySchedule() {
+    openOverlay('weeklyScheduleOverlay'); const tbody = document.querySelector('#scheduleTable tbody'); tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;font-weight:500;">جاري التحميل...</td></tr>';
+    const d = await api({ action: 'admin', op: 'get_weekly_schedule' });
+    if (!d.success) { tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:red;font-weight:500;">فشل التحميل</td></tr>'; return; }
+    if (!d.schedule.length) { tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;font-weight:500;">لا يوجد طلاب مسجلين</td></tr>'; return; }
+    tbody.innerHTML = d.schedule.map(s => `<tr><td>${esc(s.id)}</td><td>${esc(s.name)}</td><td>${calcAge(s.dob)}</td><td>${esc(s.level)||'—'}</td><td dir="ltr">${esc(s.phone)}</td><td>${esc(s.location)||'—'}</td><td>${esc(s.schedule)||'—'}</td></tr>`).join('');
+  }
+  async function exportExcel() { toast('جاري تجهيز الإكسيل...'); const d = await api({ action: 'admin', op: 'export_excel' }); if (d.success) window.open(d.url, '_blank'); else toast('فشل التصدير'); }
+  function studentURL(s) { return SITE_BASE + '?api=' + encodeURIComponent(API_URL) + '&id=' + encodeURIComponent(s.id) + '&key=' + encodeURIComponent(s.secret); }
+  function normalizePhone(p) { p = String(p || '').replace(/[\s\-\(\)]/g, ''); if (!p) return ''; if (p.startsWith('+')) p = p.substring(1); if (p.startsWith('00')) p = p.substring(2); if (p.startsWith('0')) p = '971' + p.substring(1); return p; }
+  function waMessage(s) { return `السلام عليكم،\n\nرابط متابعة حصص ${s.name} في Athar physical performance:\n\n${studentURL(s)}\n\nباقي له: ${s.remaining} حصة.`; }
+  function sendWhatsApp(id) { const s = STUDENTS.find(x => String(x.id) === String(id)); if (!s) return toast('غير موجود'); const phone = normalizePhone(s.phone); const msg = encodeURIComponent(waMessage(s)); window.open(phone ? `https://wa.me/${phone}?text=${msg}` : `https://wa.me/?text=${msg}`, '_blank'); if (!phone) toast('لا يوجد رقم'); }
+  async function copyLink(id) { const s = STUDENTS.find(x => String(x.id) === String(id)); if (!s) return; try { await navigator.clipboard.writeText(studentURL(s)); toast('✅ تم النسخ'); } catch (e) { const t = document.createElement('textarea'); t.value = studentURL(s); document.body.appendChild(t); t.select(); document.execCommand('copy'); t.remove(); toast('✅ تم النسخ'); } }
+  async function openShareCenter() { const d = await api({ action: 'admin', op: 'export_all' }); if (!d.success) return toast('فشل'); document.getElementById('shareGrid').innerHTML = d.students.map(s => `<div class="share-card"><div class="sc-name">${esc(s.name)}</div><div class="sc-meta">رقم: ${esc(s.id)} — باقي: ${s.remaining}</div><div class="sc-phone">${s.phone ? '📱 ' + esc(s.phone) : '⚠️ لا يوجد رقم'}</div><div class="sc-url">${esc(studentURL(s))}</div><div class="sc-actions"><button class="wa" onclick="sendWhatsApp('${s.id}')">📱 واتساب</button><button class="gold" onclick="copyLink('${s.id}')">📋 نسخ</button></div></div>`).join(''); openOverlay('shareOverlay'); }
+  async function exportCSV() { if (!STUDENTS.length) return toast('لا يوجد طلاب'); const rows = [['ID','Name','Phone','Paid','Remaining','Link']]; for (const s of STUDENTS) rows.push([s.id, s.name, s.phone || '', s.paid, s.remaining, studentURL(s)]); const csv = '\uFEFF' + rows.map(r => r.map(c => '"' + String(c).replace(/"/g,'""') + '"').join(',')).join('\n'); const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' }); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'Athar_Parents_' + new Date().toISOString().substring(0,10) + '.csv'; a.click(); toast('تم التصدير'); }
 
-    document.getElementById('historyContent').innerHTML = html;
-    openOverlay('historyOverlay');
-  }
+  async function openNotifications() { const d = await api({ action: 'admin', op: 'get_notifications' }); if (!d.success) return toast('فشل'); const list = document.getElementById('notifyList'); if (!d.lowStudents.length) { list.innerHTML = '<p style="text-align:center;color:#34C759;padding:40px;font-size:18px;font-weight:700;">✅ كل الطلاب رصيدهم جيد</p>'; } else { list.innerHTML = d.lowStudents.map(s => `<div class="notify-card"><div><div class="nc-name">${esc(s.name)}</div><div class="nc-meta">رقم: ${esc(s.id)} ${s.phone ? '— 📱 ' + esc(s.phone) : ''}</div><div class="nc-remaining">باقي: ${s.remaining} حصة</div></div><div style="display:flex;gap:8px;"><button class="wa" onclick="sendWhatsApp('${s.id}')">📱</button><button class="gold" onclick="copyLink('${s.id}')">📋</button></div></div>`).join(''); } openOverlay('notifyOverlay'); }
+  async function runNotifyNow() { if (!confirm('تشغيل الفحص الآن؟')) return; toast('جاري التشغيل...'); const r = await api({ action: 'admin', op: 'run_notify' }); toast(`فحص ${r.low} • أُرسل ${r.notified}`); }
 
-  function studentURL(s) {
-    return SITE_BASE + '?api=' + encodeURIComponent(API_URL) + '&id=' + encodeURIComponent(s.id) + '&key=' + encodeURIComponent(s.secret);
-  }
-  function normalizePhone(p) {
-    p = String(p || '').replace(/[\s\-\(\)]/g, '');
-    if (!p) return '';
-    if (p.startsWith('+')) p = p.substring(1);
-    if (p.startsWith('00')) p = p.substring(2);
-    if (p.startsWith('0')) p = '971' + p.substring(1);
-    return p;
-  }
-  function waMessage(s) {
-    return `السلام عليكم،\n\nرابط متابعة حصص ${s.name} في C.H Academy:\n\n${studentURL(s)}\n\nباقي له: ${s.remaining} حصة.`;
-  }
-  function sendWhatsApp(id) {
-    const s = STUDENTS.find(x => String(x.id) === String(id));
-    if (!s) return toast('غير موجود');
-    const phone = normalizePhone(s.phone);
-    const msg = encodeURIComponent(waMessage(s));
-    window.open(phone ? `https://wa.me/${phone}?text=${msg}` : `https://wa.me/?text=${msg}`, '_blank');
-    if (!phone) toast('لا يوجد رقم');
-  }
-  async function copyLink(id) {
-    const s = STUDENTS.find(x => String(x.id) === String(id));
-    if (!s) return;
-    try { await navigator.clipboard.writeText(studentURL(s)); toast('✅ تم النسخ'); }
-    catch (e) {
-      const t = document.createElement('textarea'); t.value = studentURL(s);
-      document.body.appendChild(t); t.select(); document.execCommand('copy'); t.remove();
-      toast('✅ تم النسخ');
-    }
-  }
-  async function openShareCenter() {
-    const d = await api({ action: 'admin', op: 'export_all' });
-    if (!d.success) return toast('فشل');
-    document.getElementById('shareGrid').innerHTML = d.students.map(s => `
-      <div class="share-card">
-        <div class="sc-name">${esc(s.name)}</div>
-        <div class="sc-meta">رقم: ${esc(s.id)} — باقي: ${s.remaining}</div>
-        <div class="sc-phone">${s.phone ? '📱 ' + esc(s.phone) : '⚠️ لا يوجد رقم'}</div>
-        <div class="sc-url">${esc(studentURL(s))}</div>
-        <div class="sc-actions">
-          <button class="wa" onclick="sendWhatsApp('${s.id}')">📱 واتساب</button>
-          <button class="gold" onclick="copyLink('${s.id}')">📋 نسخ</button>
-        </div>
-      </div>`).join('');
-    openOverlay('shareOverlay');
-  }
-  async function exportCSV() {
-    if (!STUDENTS.length) return toast('لا يوجد طلاب');
-    const rows = [['ID','Name','Phone','Paid','Remaining','Link']];
-    for (const s of STUDENTS) rows.push([s.id, s.name, s.phone || '', s.paid, s.remaining, studentURL(s)]);
-    const csv = '\uFEFF' + rows.map(r => r.map(c => '"' + String(c).replace(/"/g,'""') + '"').join(',')).join('\n');
-    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-    const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
-    a.download = 'CH_Parents_' + new Date().toISOString().substring(0,10) + '.csv';
-    a.click(); toast('تم التصدير');
-  }
-
-  async function openNotifications() {
-    const d = await api({ action: 'admin', op: 'get_notifications' });
-    if (!d.success) return toast('فشل');
-    const list = document.getElementById('notifyList');
-    if (!d.lowStudents.length) {
-      list.innerHTML = '<p style="text-align:center;color:#2e7d32;padding:40px;font-size:16px;">✅ كل الطلاب رصيدهم جيد</p>';
-    } else {
-      list.innerHTML = d.lowStudents.map(s => `
-        <div class="notify-card">
-          <div>
-            <div class="nc-name">${esc(s.name)}</div>
-            <div class="nc-meta">رقم: ${esc(s.id)} ${s.phone ? '— 📱 ' + esc(s.phone) : ''}</div>
-            <div class="nc-remaining">باقي: ${s.remaining} حصة</div>
-          </div>
-          <div style="display:flex;gap:6px;">
-            <button class="wa" onclick="sendWhatsApp('${s.id}')">📱</button>
-            <button class="gold" onclick="copyLink('${s.id}')">📋</button>
-          </div>
-        </div>`).join('');
-    }
-    openOverlay('notifyOverlay');
-  }
-  async function runNotifyNow() {
-    if (!confirm('تشغيل الفحص الآن؟')) return;
-    toast('جاري التشغيل...');
-    const r = await api({ action: 'admin', op: 'run_notify' });
-    toast(`فحص ${r.low} • أُرسل ${r.notified}`);
-  }
-
-  // ============= طلبات التسجيل =============
   async function openRegistrations() {
-    openOverlay('registrationsOverlay');
-    const container = document.getElementById('regList');
-    container.innerHTML = '<p style="text-align:center;color:#999;padding:40px;">جاري التحميل...</p>';
-    
+    openOverlay('registrationsOverlay'); const container = document.getElementById('regList'); container.innerHTML = '<p style="text-align:center;color:var(--gray);padding:40px;font-weight:500;">جاري التحميل...</p>';
     try {
       const d = await api({ action: 'admin', op: 'get_registrations' });
-      if (!d.success || !d.registrations.length) {
-        container.innerHTML = '<p style="text-align:center;color:#2e7d32;padding:40px;">✅ لا توجد طلبات تسجيل جديدة</p>';
-        return;
-      }
-      
+      if (!d.success || !d.registrations.length) { container.innerHTML = '<p style="text-align:center;color:#34C759;padding:40px;font-size:18px;font-weight:700;">✅ لا توجد طلبات تسجيل جديدة</p>'; return; }
       container.innerHTML = d.registrations.map(r => `
-        <div class="history-box" style="border-right: 4px solid #9c27b0;">
-          <h3>👤 ${esc(r.name)} <span style="font-size:12px;color:#666;font-weight:normal;">(${esc(r.phone)})</span></h3>
-          <p style="font-size:13px;color:#444;margin-bottom:5px;"><b>الباكدج المطلوب:</b> ${esc(r.pkg)}</p>
-          <p style="font-size:13px;color:#444;margin-bottom:5px;"><b>المواعيد:</b> ${esc(r.schedule)}</p>
-          ${r.email ? `<p style="font-size:13px;color:#444;margin-bottom:5px;"><b>الإيميل:</b> ${esc(r.email)}</p>` : ''}
-          ${r.dob ? `<p style="font-size:13px;color:#444;margin-bottom:5px;"><b>تاريخ الميلاد:</b> ${esc(r.dob)}</p>` : ''}
-          <div style="display:flex;gap:8px;margin-top:15px;">
+        <div class="history-box" style="border-right: 4px solid #AF52DE; background:#fff;">
+          <h3>👤 ${esc(r.name)} <span style="font-size:14px;color:var(--gray);font-weight:500;">(${esc(r.phone)})</span></h3>
+          <p style="font-size:15px;color:var(--text);margin-bottom:8px; background:var(--bg); padding:12px; border-radius:12px; font-weight:700;"><b>الباكدج المطلوب:</b> ${esc(r.pkg)}</p>
+          <p style="font-size:14px;color:var(--gray);margin-bottom:6px; font-weight:500;"><b>المواعيد المفضلة:</b> ${esc(r.schedule)}</p>
+          ${r.email ? `<p style="font-size:14px;color:var(--gray);margin-bottom:6px; font-weight:500;"><b>الإيميل:</b> ${esc(r.email)}</p>` : ''}
+          ${r.dob ? `<p style="font-size:14px;color:var(--gray);margin-bottom:6px; font-weight:500;"><b>تاريخ الميلاد:</b> ${esc(r.dob)}</p>` : ''}
+          <div style="display:flex;gap:10px;margin-top:20px;">
             <button class="green" onclick="approveReg(${r.id}, '${esc(r.name)}')">✅ موافقة وقبول</button>
             <button class="red" onclick="deleteReg(${r.id})">🗑 رفض وحذف</button>
           </div>
-        </div>
-      `).join('');
-    } catch (e) { container.innerHTML = '<p style="color:red;text-align:center;">خطأ في التحميل</p>'; }
+        </div>`).join('');
+    } catch (e) { container.innerHTML = '<p style="color:red;text-align:center;font-weight:600;">خطأ في التحميل</p>'; }
   }
-
   async function approveReg(id, name) {
-    const studentId = prompt(`أدخل رقم الطالب الجديد لـ (${name}):`);
-    if (!studentId) return;
-    const total = prompt(`أدخل عدد الحصص الإجمالي (مثلاً 8 أو 12):`, "8");
-    if (!total) return;
-    
-    toast('جاري الاعتماد...');
-    const d = await api({ action: 'admin', op: 'approve_reg', id, studentId, total });
-    if (d.success) {
-      toast('✅ تم قبول الطالب بنجاح');
-      openRegistrations(); // إعادة تحميل القائمة
-      refresh(); // تحديث قائمة الطلاب
-    } else toast(d.message || 'فشل');
+    const studentId = prompt(`أدخل رقم الطالب الجديد لـ (${name}):`); if (studentId === null) return;
+    const total = prompt(`أدخل عدد الحصص الإجمالي (مثلاً 8 أو 12):`, "8"); if (total === null) return;
+    toast('جاري الاعتماد...'); const d = await api({ action: 'admin', op: 'approve_reg', id, studentId, total });
+    if (d.success) { toast('✅ تم قبول الطالب بنجاح'); openRegistrations(); refresh(); } else toast(d.message || 'فشل');
   }
+  async function deleteReg(id) { if (!confirm('هل أنت متأكد من حذف/رفض هذا الطلب؟')) return; const d = await api({ action: 'admin', op: 'delete_reg', id }); if (d.success) { toast('تم الحذف'); openRegistrations(); } else toast('فشل'); }
 
-  async function deleteReg(id) {
-    if (!confirm('هل أنت متأكد من حذف/رفض هذا الطلب؟')) return;
-    const d = await api({ action: 'admin', op: 'delete_reg', id });
-    if (d.success) { toast('تم الحذف'); openRegistrations(); } else toast('فشل');
-  }
-
-  // ============= إدارة الباكدجات =============
-  async function openPackages() {
-    openOverlay('packagesOverlay');
-    loadPackages();
-  }
+  async function openPackages() { openOverlay('packagesOverlay'); loadPackages(); }
   async function loadPackages() {
-    const d = await api({ action: 'admin', op: 'get_pkg_lvl' });
-    if (!d.success) return toast('فشل التحميل');
-    
+    const d = await api({ action: 'admin', op: 'get_pkg_lvl' }); if (!d.success) return toast('فشل التحميل');
     const container = document.getElementById('pkgList');
-    if (!d.packages.length) { container.innerHTML = '<p>لا توجد باكدجات مضافة.</p>'; return; }
-    
-    container.innerHTML = d.packages.map(p => `
-      <div class="history-item" style="border-right-color:#E67E22;">
-        <div>
-          <div style="font-weight:bold;">${esc(p[1])}</div>
-          <div style="font-size:12px;color:#666;">${p[2]} حصة — ${p[3]} د.إ</div>
-        </div>
-        <div style="display:flex;gap:6px;">
-          <button class="small gold" onclick="editPkg('${p[0]}','${esc(p[1])}',${p[2]},${p[3]})">✏️</button>
-          <button class="small red" onclick="deletePkg('${p[0]}')">🗑</button>
-        </div>
-      </div>
-    `).join('');
+    if (!d.packages.length) { container.innerHTML = '<p style="color:var(--gray);font-weight:500;">لا توجد باكدجات مضافة.</p>'; return; }
+    container.innerHTML = d.packages.map(p => `<div class="history-item" style="border-right-color:var(--primary); background:#fff; box-shadow:0 4px 15px rgba(0,0,0,0.03);"><div><div style="font-weight:800; font-size:16px; color:var(--text);">${esc(p[1])}</div><div style="font-size:14px;color:var(--gray); font-weight:500;">${p[2]} حصة — ${p[3]} د.إ</div></div><div style="display:flex;gap:8px;"><button class="small gold" onclick="editPkg('${p[0]}','${esc(p[1])}',${p[2]},${p[3]})">✏️</button><button class="small red" onclick="deletePkg('${p[0]}')">🗑</button></div></div>`).join('');
   }
-  function editPkg(id, name, sessions, price) {
-    document.getElementById('pkgId').value = id;
-    document.getElementById('pkgName').value = name;
-    document.getElementById('pkgSessions').value = sessions;
-    document.getElementById('pkgPrice').value = price;
-  }
+  function editPkg(id, name, sessions, price) { document.getElementById('pkgId').value = id; document.getElementById('pkgName').value = name; document.getElementById('pkgSessions').value = sessions; document.getElementById('pkgPrice').value = price; }
   async function savePkg() {
-    const id = document.getElementById('pkgId').value;
-    const name = document.getElementById('pkgName').value.trim();
-    const sessions = document.getElementById('pkgSessions').value;
-    const price = document.getElementById('pkgPrice').value;
+    const id = document.getElementById('pkgId').value; const name = document.getElementById('pkgName').value.trim(); const sessions = document.getElementById('pkgSessions').value; const price = document.getElementById('pkgPrice').value;
     if (!name || !sessions || !price) return toast('أكمل البيانات');
     const d = await api({ action: 'admin', op: 'save_package', id, name, sessions, price });
-    if (d.success) {
-      toast('✅ تم حفظ الباكدج');
-      document.getElementById('pkgId').value = '';
-      document.getElementById('pkgName').value = '';
-      document.getElementById('pkgSessions').value = '';
-      document.getElementById('pkgPrice').value = '';
-      loadPackages();
-    } else toast('فشل');
+    if (d.success) { toast('✅ تم حفظ الباكدج'); document.getElementById('pkgId').value = ''; document.getElementById('pkgName').value = ''; document.getElementById('pkgSessions').value = ''; document.getElementById('pkgPrice').value = ''; loadPackages(); } else toast('فشل');
   }
-  async function deletePkg(id) {
-    if (!confirm('حذف الباكدج؟')) return;
-    const d = await api({ action: 'admin', op: 'delete_package', id });
-    if (d.success) { toast('تم الحذف'); loadPackages(); } else toast('فشل');
-  }
+  async function deletePkg(id) { if (!confirm('حذف الباكدج؟')) return; const d = await api({ action: 'admin', op: 'delete_package', id }); if (d.success) { toast('تم الحذف'); loadPackages(); } else toast('فشل'); }
 
-  // ============= إدارة المستويات =============
-  async function openLevels() {
-    openOverlay('levelsOverlay');
-    loadLevels();
-  }
+  async function openLevels() { openOverlay('levelsOverlay'); loadLevels(); }
   async function loadLevels() {
-    const d = await api({ action: 'admin', op: 'get_pkg_lvl' });
-    if (!d.success) return toast('فشل التحميل');
-    
+    const d = await api({ action: 'admin', op: 'get_pkg_lvl' }); if (!d.success) return toast('فشل التحميل');
     const container = document.getElementById('lvlList');
-    if (!d.levels.length) { container.innerHTML = '<p>لا توجد مستويات مضافة.</p>'; return; }
-    
-    container.innerHTML = d.levels.map(l => `
-      <div class="history-item" style="border-right-color:#1565c0;">
-        <div>
-          <div style="font-weight:bold;">${esc(l[1])}</div>
-          <div style="font-size:12px;color:#666;">${esc(l[2])}</div>
-        </div>
-        <div style="display:flex;gap:6px;">
-          <button class="small gold" onclick="editLvl('${l[0]}','${esc(l[1])}','${esc(l[2])}')">✏️</button>
-          <button class="small red" onclick="deleteLvl('${l[0]}')">🗑</button>
-        </div>
-      </div>
-    `).join('');
+    if (!d.levels.length) { container.innerHTML = '<p style="color:var(--gray);font-weight:500;">لا توجد مستويات مضافة.</p>'; return; }
+    container.innerHTML = d.levels.map(l => `<div class="history-item" style="border-right-color:#007AFF; background:#fff; box-shadow:0 4px 15px rgba(0,0,0,0.03);"><div><div style="font-weight:800; font-size:16px; color:var(--text);">${esc(l[1])}</div><div style="font-size:14px;color:var(--gray); font-weight:500;">${esc(l[2])}</div></div><div style="display:flex;gap:8px;"><button class="small gold" onclick="editLvl('${l[0]}','${esc(l[1])}','${esc(l[2])}')">✏️</button><button class="small red" onclick="deleteLvl('${l[0]}')">🗑</button></div></div>`).join('');
   }
-  function editLvl(id, name, desc) {
-    document.getElementById('lvlId').value = id;
-    document.getElementById('lvlName').value = name;
-    document.getElementById('lvlDesc').value = desc;
-  }
+  function editLvl(id, name, desc) { document.getElementById('lvlId').value = id; document.getElementById('lvlName').value = name; document.getElementById('lvlDesc').value = desc; }
   async function saveLvl() {
-    const id = document.getElementById('lvlId').value;
-    const name = document.getElementById('lvlName').value.trim();
-    const desc = document.getElementById('lvlDesc').value.trim();
+    const id = document.getElementById('lvlId').value; const name = document.getElementById('lvlName').value.trim(); const desc = document.getElementById('lvlDesc').value.trim();
     if (!name) return toast('اسم المستوى مطلوب');
     const d = await api({ action: 'admin', op: 'save_level', id, name, desc });
-    if (d.success) {
-      toast('✅ تم حفظ المستوى');
-      document.getElementById('lvlId').value = '';
-      document.getElementById('lvlName').value = '';
-      document.getElementById('lvlDesc').value = '';
-      loadLevels();
-    } else toast('فشل');
+    if (d.success) { toast('✅ تم حفظ المستوى'); document.getElementById('lvlId').value = ''; document.getElementById('lvlName').value = ''; document.getElementById('lvlDesc').value = ''; loadLevels(); } else toast('فشل');
   }
-  async function deleteLvl(id) {
-    if (!confirm('حذف المستوى؟')) return;
-    const d = await api({ action: 'admin', op: 'delete_level', id });
-    if (d.success) { toast('تم الحذف'); loadLevels(); } else toast('فشل');
-  }
+  async function deleteLvl(id) { if (!confirm('حذف المستوى؟')) return; const d = await api({ action: 'admin', op: 'delete_level', id }); if (d.success) { toast('تم الحذف'); loadLevels(); } else toast('فشل'); }
 
-  // ============= الإعدادات =============
-  function switchTab(e, tabId) {
-    document.querySelectorAll('.tabs button').forEach(b => b.classList.remove('active'));
-    e.target.classList.add('active');
-    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-    document.getElementById(tabId).classList.add('active');
-    if (tabId === 'tabBackup') loadBackupStatus();
-  }
-
+  function switchTab(e, tabId) { document.querySelectorAll('.tabs button').forEach(b => b.classList.remove('active')); e.target.classList.add('active'); document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active')); document.getElementById(tabId).classList.add('active'); if (tabId === 'tabBackup') loadBackupStatus(); }
   async function openSettings() {
-    openOverlay('settingsOverlay');
-    const d = await api({ action: 'admin', op: 'get_config' });
-    if (!d.success) return toast('فشل');
-    CONFIG = d.config;
-    document.getElementById('primaryColor').value = CONFIG.primaryColor;
-    document.getElementById('primaryHex').value = CONFIG.primaryColor;
-    document.getElementById('secondaryColor').value = CONFIG.secondaryColor;
-    document.getElementById('secondaryHex').value = CONFIG.secondaryColor;
-    document.getElementById('brandName').value = CONFIG.brandName;
-    document.getElementById('brandSubtitle').value = CONFIG.brandSubtitle;
-    document.getElementById('footerTextAr').value = CONFIG.footerTextAr;
-    document.getElementById('footerTextEn').value = CONFIG.footerTextEn;
-    document.getElementById('inquiryPhone').value = CONFIG.inquiryPhone || '';
-    document.getElementById('lowThreshold').value = CONFIG.lowThreshold;
-    document.getElementById('cooldownDays').value = CONFIG.cooldownDays;
-    document.getElementById('maxFails').value = CONFIG.maxFails;
-    document.getElementById('adminEmail').value = CONFIG.adminEmail || '';
-    document.getElementById('callMeBotPhone').value = CONFIG.callMeBotPhone || '';
+    openOverlay('settingsOverlay'); const d = await api({ action: 'admin', op: 'get_config' }); if (!d.success) return toast('فشل'); CONFIG = d.config;
+    document.getElementById('primaryColor').value = CONFIG.primaryColor; document.getElementById('primaryHex').value = CONFIG.primaryColor;
+    document.getElementById('secondaryColor').value = CONFIG.secondaryColor; document.getElementById('secondaryHex').value = CONFIG.secondaryColor;
+    document.getElementById('brandName').value = CONFIG.brandName; document.getElementById('brandSubtitle').value = CONFIG.brandSubtitle;
+    document.getElementById('footerTextAr').value = CONFIG.footerTextAr; document.getElementById('footerTextEn').value = CONFIG.footerTextEn;
+    document.getElementById('inquiryPhone').value = CONFIG.inquiryPhone || ''; document.getElementById('lowThreshold').value = CONFIG.lowThreshold;
+    document.getElementById('cooldownDays').value = CONFIG.cooldownDays; document.getElementById('maxFails').value = CONFIG.maxFails;
+    document.getElementById('adminEmail').value = CONFIG.adminEmail || ''; document.getElementById('callMeBotPhone').value = CONFIG.callMeBotPhone || '';
   }
-
   async function saveAllConfig() {
-    const params = {
-      action: 'admin', op: 'save_config',
-      primaryColor: document.getElementById('primaryColor').value,
-      secondaryColor: document.getElementById('secondaryColor').value,
-      brandName: document.getElementById('brandName').value.trim(),
-      brandSubtitle: document.getElementById('brandSubtitle').value.trim(),
-      footerTextAr: document.getElementById('footerTextAr').value.trim(),
-      footerTextEn: document.getElementById('footerTextEn').value.trim(),
-      inquiryPhone: document.getElementById('inquiryPhone').value.trim(),
-      lowThreshold: document.getElementById('lowThreshold').value,
-      cooldownDays: document.getElementById('cooldownDays').value,
-      maxFails: document.getElementById('maxFails').value,
-      adminEmail: document.getElementById('adminEmail').value.trim(),
-      callMeBotPhone: document.getElementById('callMeBotPhone').value.trim()
-    };
-    const key = document.getElementById('callMeBotApiKey').value.trim();
-    if (key) params.callMeBotApiKey = key;
-    const r = await api(params);
-    toast(r.success ? '✅ تم حفظ الإعدادات' : 'فشل');
+    const params = { action: 'admin', op: 'save_config', primaryColor: document.getElementById('primaryColor').value, secondaryColor: document.getElementById('secondaryColor').value, brandName: document.getElementById('brandName').value.trim(), brandSubtitle: document.getElementById('brandSubtitle').value.trim(), footerTextAr: document.getElementById('footerTextAr').value.trim(), footerTextEn: document.getElementById('footerTextEn').value.trim(), inquiryPhone: document.getElementById('inquiryPhone').value.trim(), lowThreshold: document.getElementById('lowThreshold').value, cooldownDays: document.getElementById('cooldownDays').value, maxFails: document.getElementById('maxFails').value, adminEmail: document.getElementById('adminEmail').value.trim(), callMeBotPhone: document.getElementById('callMeBotPhone').value.trim() };
+    const key = document.getElementById('callMeBotApiKey').value.trim(); if (key) params.callMeBotApiKey = key;
+    const r = await api(params); toast(r.success ? '✅ تم حفظ الإعدادات' : 'فشل');
   }
-
   async function changePassword() {
-    const oldPw = document.getElementById('oldPw').value;
-    const newPw = document.getElementById('newPw').value;
-    const newPw2 = document.getElementById('newPw2').value;
-    if (!oldPw || !newPw) return toast('أدخل كلمتي السر');
-    if (newPw.length < 8) return toast('8 أحرف على الأقل');
-    if (newPw !== newPw2) return toast('غير متطابقتين');
+    const oldPw = document.getElementById('oldPw').value; const newPw = document.getElementById('newPw').value; const newPw2 = document.getElementById('newPw2').value;
+    if (!oldPw || !newPw) return toast('أدخل كلمتي السر'); if (newPw.length < 8) return toast('8 أحرف على الأقل'); if (newPw !== newPw2) return toast('غير متطابقتين');
     const r = await api({ action: 'admin', op: 'change_password', old_password: oldPw, new_password: newPw });
-    if (r.success) {
-      TOKEN = r.token; sessionStorage.setItem('ch_token', TOKEN);
-      ['oldPw','newPw','newPw2'].forEach(x => document.getElementById(x).value = '');
-      toast('✅ تم التغيير');
-    } else toast(r.message || 'فشل');
+    if (r.success) { TOKEN = r.token; sessionStorage.setItem('ch_token', TOKEN); ['oldPw','newPw','newPw2'].forEach(x => document.getElementById(x).value = ''); toast('✅ تم التغيير'); } else toast(r.message || 'فشل');
   }
+  async function logoutAll() { if (!confirm('تسجيل خروج من كل الأجهزة؟')) return; await api({ action: 'admin', op: 'logout_all' }); sessionStorage.removeItem('ch_token'); location.reload(); }
+  async function testNotify() { toast('جاري الإرسال...'); const r = await api({ action: 'admin', op: 'test_notify' }); toast(r.message || (r.success ? '✅ تم' : 'فشل')); }
+  async function loadBackupStatus() { const el = document.getElementById('backupStatus'); el.innerHTML = 'جاري التحميل...'; const d = await api({ action: 'admin', op: 'backup_status' }); if (!d.success) { el.innerHTML = 'فشل التحميل'; return; } el.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;"><strong>الحالة:</strong><span style="color:${d.active ? '#34C759' : '#FF3B30'}; font-weight:700;">${d.active ? '✅ مفعّل' : '❌ غير مفعّل'}</span></div><div style="display:flex;justify-content:space-between;align-items:center;"><strong>آخر نسخة:</strong><span style="color:var(--gray); font-weight:600;">${d.lastBackup ? fmtDate(new Date(d.lastBackup).getTime()) : 'لم تُنشأ بعد'}</span></div>`; }
+  async function backupNow() { if (!confirm('إنشاء نسخة احتياطية الآن؟')) return; toast('جاري النسخ...'); const r = await api({ action: 'admin', op: 'backup_now' }); if (r.success) { toast('✅ تم إنشاء نسخة'); loadBackupStatus(); } else toast('فشل'); }
 
-  async function logoutAll() {
-    if (!confirm('تسجيل خروج من كل الأجهزة؟')) return;
-    await api({ action: 'admin', op: 'logout_all' });
-    sessionStorage.removeItem('ch_token');
-    location.reload();
-  }
+  function openOverlay(id) { document.getElementById(id).style.display = 'block'; document.body.style.overflow = 'hidden'; }
+  function closeOverlay(id) { document.getElementById(id).style.display = 'none'; document.body.style.overflow = ''; }
 
-  async function testNotify() {
-    toast('جاري الإرسال...');
-    const r = await api({ action: 'admin', op: 'test_notify' });
-    toast(r.message || (r.success ? '✅ تم' : 'فشل'));
-  }
-
-  async function loadBackupStatus() {
-    const el = document.getElementById('backupStatus');
-    el.innerHTML = 'جاري التحميل...';
-    const d = await api({ action: 'admin', op: 'backup_status' });
-    if (!d.success) { el.innerHTML = 'فشل التحميل'; return; }
-    el.innerHTML = `
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
-        <strong>الحالة:</strong>
-        <span style="color:${d.active ? '#2e7d32' : '#c62828'};">
-          ${d.active ? '✅ مفعّل (يومياً 3 صباحاً)' : '❌ غير مفعّل'}
-        </span>
-      </div>
-      <div style="display:flex;justify-content:space-between;align-items:center;">
-        <strong>آخر نسخة:</strong>
-        <span style="color:#666;">${d.lastBackup ? fmtDate(new Date(d.lastBackup).getTime()) : 'لم تُنشأ بعد'}</span>
-      </div>`;
-  }
-
-  async function backupNow() {
-    if (!confirm('إنشاء نسخة احتياطية الآن؟')) return;
-    toast('جاري النسخ...');
-    const r = await api({ action: 'admin', op: 'backup_now' });
-    if (r.success) { toast('✅ تم إنشاء نسخة'); loadBackupStatus(); }
-    else toast('فشل');
-  }
-
-  function openOverlay(id) {
-    document.getElementById(id).style.display = 'block';
-    document.body.style.overflow = 'hidden';
-  }
-  function closeOverlay(id) {
-    document.getElementById(id).style.display = 'none';
-    document.body.style.overflow = '';
-  }
-
-  window.saveApi=saveApi; window.doLogin=doLogin; window.doLogout=doLogout;
-  window.refresh=refresh; window.adjust=adjust; window.addStudent=addStudent; window.del=del;
-  window.openPayment=openPayment; window.submitPayment=submitPayment;
-  window.openEdit=openEdit; window.submitEdit=submitEdit;
-  window.openHistory=openHistory;
-  window.sendWhatsApp=sendWhatsApp; window.copyLink=copyLink;
-  window.openShareCenter=openShareCenter; window.exportCSV=exportCSV;
-  window.openNotifications=openNotifications; window.runNotifyNow=runNotifyNow;
-  window.openRegistrations=openRegistrations; window.approveReg=approveReg; window.deleteReg=deleteReg;
-  window.openPackages=openPackages; window.savePkg=savePkg; window.deletePkg=deletePkg; window.editPkg=editPkg;
-  window.openLevels=openLevels; window.saveLvl=saveLvl; window.deleteLvl=deleteLvl; window.editLvl=editLvl;
-  window.openSettings=openSettings; window.closeOverlay=closeOverlay;
-  window.switchTab=switchTab; window.saveAllConfig=saveAllConfig;
-  window.changePassword=changePassword; window.logoutAll=logoutAll;
+  window.saveApi=saveApi; window.doLogin=doLogin; window.doLogout=doLogout; window.refresh=refresh; window.adjust=adjust; window.addStudent=addStudent; window.del=del;
+  window.openPayment=openPayment; window.submitPayment=submitPayment; window.openEdit=openEdit; window.submitEdit=submitEdit; window.openRenew=openRenew; window.submitRenew=submitRenew;
+  window.openHistory=openHistory; window.openWeeklySchedule=openWeeklySchedule; window.exportExcel=exportExcel;
+  window.sendWhatsApp=sendWhatsApp; window.copyLink=copyLink; window.openShareCenter=openShareCenter; window.exportCSV=exportCSV;
+  window.openNotifications=openNotifications; window.runNotifyNow=runNotifyNow; window.openRegistrations=openRegistrations; window.approveReg=approveReg; window.deleteReg=deleteReg;
+  window.openPackages=openPackages; window.savePkg=savePkg; window.deletePkg=deletePkg; window.editPkg=editPkg; window.openLevels=openLevels; window.saveLvl=saveLvl; window.deleteLvl=deleteLvl; window.editLvl=editLvl;
+  window.openSettings=openSettings; window.closeOverlay=closeOverlay; window.switchTab=switchTab; window.saveAllConfig=saveAllConfig; window.changePassword=changePassword; window.logoutAll=logoutAll;
   window.testNotify=testNotify; window.loadBackupStatus=loadBackupStatus; window.backupNow=backupNow;
 
-  (function init() {
-    if (!API_URL) { showSetup(); return; }
-    if (TOKEN) {
-      document.getElementById('loginView').style.display = 'none';
-      document.getElementById('mainView').style.display = 'block';
-      refresh();
-    } else { showLogin(); }
-  })();
+  (function init() { if (!API_URL || API_URL === 'PUT_YOUR_NEW_API_URL_HERE') { showSetup(); return; } if (TOKEN) { document.getElementById('loginView').style.display = 'none'; document.getElementById('mainView').style.display = 'block'; refresh(); } else { showLogin(); } })();
 </script>
 </body>
 </html>
