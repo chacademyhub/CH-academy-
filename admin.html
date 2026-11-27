@@ -324,8 +324,7 @@
     }).join('');
   }
 
-  async function adjust(id, op) { let note = ''; if (op === 'inc') { const input = prompt('ملاحظة على الحصة (اختياري):'); if (input === null) return; note = input; } const d = await api({ action: 'admin', op, id, note }); if (d.success) { toast('✅ تم التحديث'); refresh(); } else toast(d.message || 'فشل'); }
-  async function addStudent() {
+  async function adjust(id, op) { const d = await api({ action: 'admin', op, id, note: '' }); if (d.success) { toast('✅ تم التحديث'); refresh(); } else toast(d.message || 'فشل'); }  async function addStudent() {
     const id = document.getElementById('newId').value.trim(); const name = document.getElementById('newName').value.trim(); const total = document.getElementById('newTotal').value || 0;
     const phone = document.getElementById('newPhone').value.trim(); const email = document.getElementById('newEmail').value.trim(); const dob = document.getElementById('newDob').value;
     const schedule = document.getElementById('newSchedule').value.trim(); const location = document.getElementById('newLocation').value.trim(); const level = document.getElementById('newLevel').value.trim();
